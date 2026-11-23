@@ -31,4 +31,4 @@ jobs:
                   gradle-version: '8.9'
 
             - name: Build debug APK
-              run: gradle :app:assembleDebug --stacktrace
+              run: ./gradlew :app:assembleDebug --stacktrace

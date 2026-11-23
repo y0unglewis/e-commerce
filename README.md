@@ -30,7 +30,7 @@
 2. Clone repo và mở **thư mục gốc** chứa `settings.gradle` bằng **File → Open**.
 3. Chờ **Gradle Sync**; chọn emulator hoặc thiết bị Android API 24 trở lên.
 4. Chạy cấu hình **app**. Màn hình mở đầu là `HomeActivity`.
-5. Nếu project chưa có bộ Gradle Wrapper (`gradlew`, `gradlew.bat`, `gradle-wrapper.jar`), hãy tạo bằng `gradle wrapper --gradle-version 8.9` từ máy đã cài Gradle, hoặc dùng Android Studio để bổ sung wrapper trước khi chia sẻ. **Không tạo `local.properties` thủ công cho máy của người khác.**
+5. Repo có sẵn `gradlew`, `gradlew.bat` và `gradle/wrapper/gradle-wrapper.jar`. Trên Windows có thể chạy `./gradlew.bat :app:assembleDebug` sau khi cài SDK/JDK; không cần cài Gradle toàn máy. **Không tạo `local.properties` cho máy của người khác.**
 
 > Ghi chú: bản nền chưa có CI/build Android được xác nhận trong môi trường tự động. Mọi thành viên cần Sync và chạy app trên máy thật/emulator trước khi gửi PR.
 
