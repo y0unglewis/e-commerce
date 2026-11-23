@@ -1,12 +1,10 @@
 # Hướng dẫn Git cho nhóm 3 người (Windows PowerShell)
 
-Đây là **lệnh gõ trực tiếp** trong Terminal Android Studio/PowerShell. **Không copy phần `PS C:\...>`** khi chạy.
+Đây là **lệnh gõ trực tiếp** trong Terminal Android Studio/PowerShell. **Không copy phần `PS C:\\...>`** khi chạy. Trước khi code, đọc [AGENTS.md](AGENTS.md) và [docs/TEAM_TASKS.md](docs/TEAM_TASKS.md). Chỉ sửa file thuộc Issue được giao; **không tự xóa, đổi tên, format lại hoặc thay code của thành viên khác**.
 
 ## 1. Chuẩn bị một lần
 
-Nhóm trưởng gửi link `https://github.com/y0unglewis/e-commerce` và mời hai bạn làm **Collaborator** (Settings → Collaborators). Hai bạn chấp nhận lời mời.
-
-Lần đầu tải project về:
+Nhóm trưởng mời hai bạn làm Collaborator tại GitHub Settings; chấp nhận lời mời trước khi push.
 
 ```powershell
 git clone https://github.com/y0unglewis/e-commerce.git
@@ -16,13 +14,15 @@ git switch develop
 git pull --ff-only origin develop
 ```
 
-Nếu `git switch develop` báo không tìm thấy nhánh tại máy, dùng:
+Nếu `git switch develop` không tìm thấy nhánh local:
 
 ```powershell
 git switch -c develop --track origin/develop
 ```
 
-## 2. Mỗi người tạo nhánh riêng (không dùng chung một nhánh)
+## 2. Mỗi Issue trên nhánh của mình
+
+Từ `develop` đã cập nhật, khi `git status` sạch:
 
 ```powershell
 git switch develop
@@ -30,60 +30,61 @@ git pull --ff-only origin develop
 git switch -c feature/product-detail
 ```
 
-Đổi tên cuối cho đúng phần việc:
+Tên nhánh theo Issue:
+- TV1: `feature/home-filter` (#2), `feature/auth-session` (#3).
+- TV2: `feature/product-detail` (#4), `feature/profile` (#5); nếu gộp Profile vào nhánh Detail, phải thống nhất và ghi đủ hai Issue trong PR.
+- TV3: `feature/cart-checkout` (#6).
 
-- TV1: `feature/home-catalog`
-- TV2: `feature/product-detail`
-- TV3: `feature/cart-checkout`
+**Không chạy `git switch -c` lại nếu nhánh đã có**; khi đó dùng `git switch <tên-nhánh>`. Không dùng chung nhánh với thành viên khác.
 
-Không chạy lại `git switch -c ...` nếu nhánh đã tồn tại. Khi đó `git switch feature/product-detail` là đủ.
-
-## 3. Sau khi sửa code
+## 3. Commit chính xác các file của mình
 
 ```powershell
 git status
 git diff --check
-git add app/src/main/java app/src/main/res
-git commit -m "feat: build product detail tabs"
+git add app/src/main/java/com/example/gearhub/ui/ProductDetailActivity.java
+git add app/src/main/res/layout/activity_product_detail.xml
+git diff --cached --name-status
+git diff --cached
+git commit -m "feat: improve product detail"
 git push -u origin feature/product-detail
 ```
 
-`git add` theo ví dụ cần **xem kỹ `git status` trước**. Đừng vô tình stage các file người khác đang làm hoặc `local.properties`.
+Các lệnh `git add` ở trên **chỉ là ví dụ cho TV2**. Mỗi người thêm đúng file của mình, gồm file mới nếu có. **Không stage bừa bằng `git add .`, `git add -A` hoặc cả thư mục `app/src/main/java`/`res`**, vì có thể commit file người khác hoặc file bị xóa nhầm. Kiểm tra `git diff --cached --name-status`: nếu thấy file bị xóa/đổi tên ngoài Issue, dừng lại và hỏi nhóm trưởng.
 
-Mở GitHub → **Compare & pull request** → chọn:
+Tạo GitHub PR với **base: `develop`** và **compare: feature branch**. Ghi Issue liên quan, screenshot, danh sách file, chức năng đã test/chưa test. Nhóm trưởng review và merge.
 
-- **base:** `develop`
-- **compare:** nhánh feature của mình
+## 4. Cập nhật thay đổi mới của nhóm
 
-Ghi rõ nội dung, các file sửa, ảnh giao diện và cách kiểm tra. Nhóm trưởng review và merge.
-
-## 4. Sau khi nhánh đã merge
+Sau khi PR đã merge:
 
 ```powershell
 git switch develop
 git pull --ff-only origin develop
 ```
 
-Muốn làm chức năng mới thì tạo **nhánh feature mới** từ `develop` đã cập nhật.
+Nếu đang làm nhánh riêng và cần cập nhật code chung, **chỉ khi working tree sạch**:
 
-## 5. Tránh xung đột
+```powershell
+git switch feature/product-detail
+git fetch origin
+git merge origin/develop
+```
 
-- Không tự sửa `colors.xml`, `themes.xml`, `Product.java`, `DatabaseHelper`, `AppConstants`, `AndroidManifest.xml`, `build.gradle` khi chưa trao đổi.
-- Nếu phát hiện cần sửa file chung: báo nhóm trưởng và ghi yêu cầu cụ thể; ưu tiên nhóm trưởng cập nhật trước cho mọi người pull.
-- Mỗi Activity và file XML màn hình chỉ một người chính sửa cùng lúc.
-- Nếu push bị từ chối, **không force push**; chụp `git status` và lỗi gửi nhóm trưởng.
-- Nếu `git switch`/`git pull` báo local changes, **không chạy `git restore` hay `reset --hard` bừa**. Commit nhánh riêng hoặc `git stash push -m "backup before pull"` rồi mới xử lý.
-- Khi giải quyết conflict, dùng chức năng Merge của Android Studio, đọc cả hai phía rồi chạy app lại.
+Nếu có xung đột, đọc đầy đủ cả hai bên, hỏi **người sở hữu file** trước khi quyết định. Không bấm “Accept Yours/Theirs” cho mọi file rồi coi là xong. Sau xử lý phải build/test lại.
 
-## 6. Cài luật bảo vệ nhánh trên GitHub (nhóm trưởng)
+## 5. Những điều không được làm khi chưa thống nhất
 
-Vào repo → **Settings → Rules → Rulesets → New ruleset → New branch ruleset** (tên mục có thể khác tùy giao diện):
+- Không push trực tiếp `main`/`develop`; không force push; không tự merge PR của bạn khác.
+- Không sửa `AppConstants.java`, `model/Product.java`, `database/*`, `AndroidManifest.xml`, `colors.xml`, `themes.xml`, Gradle, menu/resource chung. Nếu cần, mô tả yêu cầu để TV1 cập nhật hoặc duyệt trước.
+- Không xóa Activity/layout/drawable, code cũ, dữ liệu mẫu hoặc refactor file nằm ngoài Issue.
+- Không tạo thêm `Product`, DatabaseHelper, `SessionManager` hoặc khóa Intent tùy tiện.
+- Không dùng `git reset --hard`, `git clean -fd`, `git restore .` hay `git checkout -- .` khi chưa hiểu và sao lưu thay đổi cục bộ.
+- Nếu `git switch`/`git pull` báo local changes, **không dùng lệnh hủy thay đổi để ép chạy**; commit đúng nhánh hoặc stash có tên, rồi mới cập nhật.
+- Nếu push bị từ chối, không force; dùng `git fetch`, đọc lỗi và báo nhóm trưởng.
 
-1. Chọn nhánh đích `main` và `develop` (tạo ruleset riêng nếu cần).
-2. Bật **Require a pull request before merging**.
-3. Bật **Block force pushes** và **Restrict deletions**.
-4. Với nhóm 3 người deadline gấp, có thể để số lượt approval bắt buộc = 0 hoặc 1 theo khả năng review thực tế; vẫn phải kiểm tra thủ công.
-5. **Không bật required status checks** khi chưa có CI tương ứng (dễ khóa merge vào phút cuối).
-6. Kiểm tra trạng thái **Active** và trường hợp tài khoản chủ repo có quyền bypass. Đảm bảo nhóm trưởng cũng tuân thủ quy trình.
+## 6. Ruleset bảo vệ nhánh (nhóm trưởng)
 
-> File này là **quy tắc bằng văn bản**, không tự động bật branch protection. Nhóm trưởng phải lưu Ruleset trong GitHub Settings mới có hiệu lực kỹ thuật.
+GitHub Settings → Rules → Rulesets: đặt luật active cho `main` và `develop`, yêu cầu PR, chặn force push và xóa nhánh. Số approval/status checks điều chỉnh theo khả năng nhóm; kiểm tra thực tế quyền bypass. Tài liệu này không tự bật cấu hình GitHub.
+
+**Trước khi bàn giao:** Gradle Sync/build thành công, thử luồng trên emulator, `git status` sạch sau commit, PR có ảnh + các bước test + ghi rõ phần demo/placeholder. Chi tiết coding rules nằm trong [AGENTS.md](AGENTS.md).
