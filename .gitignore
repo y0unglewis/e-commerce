@@ -1,0 +1,24 @@
+# Android Studio / Gradle
+.gradle/
+.idea/
+*.iml
+local.properties
+build/
+**/build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.keystore
+*.jks
+
+# SQLite chạy trên thiết bị, không commit dữ liệu cục bộ
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Hệ điều hành
+.DS_Store
+Thumbs.db

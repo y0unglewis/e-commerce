@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.GearHub" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/gear_primary</item>
+        <item name="colorPrimaryVariant">@color/gear_primary_dark</item>
+        <item name="colorOnPrimary">@color/gear_surface</item>
+        <item name="colorSecondary">@color/gear_accent</item>
+        <item name="colorOnSecondary">@color/gear_text</item>
+        <item name="colorSurface">@color/gear_surface</item>
+        <item name="colorOnSurface">@color/gear_text</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/gear_background</item>
+        <item name="android:navigationBarColor">@color/gear_surface</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowBackground">@color/gear_background</item>
+    </style>
+
+    <style name="Widget.GearHub.PrimaryButton" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">14dp</item>
+        <item name="android:minHeight">52dp</item>
+        <item name="backgroundTint">@color/gear_primary</item>
+        <item name="android:textColor">@color/gear_surface</item>
+    </style>
+
+    <style name="Widget.GearHub.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">14dp</item>
+        <item name="android:minHeight">52dp</item>
+        <item name="strokeColor">@color/gear_primary</item>
+        <item name="android:textColor">@color/gear_primary</item>
+    </style>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bảng màu chung đã chốt cho tất cả các màn hình GearHub. -->
+    <color name="gear_primary">#2563EB</color>
+    <color name="gear_primary_dark">#1D4ED8</color>
+    <color name="gear_primary_light">#EFF6FF</color>
+    <color name="gear_text">#0F172A</color>
+    <color name="gear_muted">#64748B</color>
+    <color name="gear_background">#F8FAFC</color>
+    <color name="gear_surface">#FFFFFF</color>
+    <color name="gear_border">#E2E8F0</color>
+    <color name="gear_accent">#F59E0B</color>
+    <color name="gear_danger">#DC2626</color>
+</resources>
