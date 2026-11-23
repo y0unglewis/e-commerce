@@ -32,7 +32,7 @@
 4. Chạy cấu hình **app**. Màn hình mở đầu là `HomeActivity`.
 5. Repo có sẵn `gradlew`, `gradlew.bat` và `gradle/wrapper/gradle-wrapper.jar`. Trên Windows có thể chạy `./gradlew.bat :app:assembleDebug` sau khi cài SDK/JDK; không cần cài Gradle toàn máy. **Không tạo `local.properties` cho máy của người khác.**
 
-> Ghi chú: bản nền chưa có CI/build Android được xác nhận trong môi trường tự động. Mọi thành viên cần Sync và chạy app trên máy thật/emulator trước khi gửi PR.
+> GitHub Actions có bước **build debug APK** khi push/PR. Việc build thành công chưa thay cho kiểm tra UI bằng emulator: mỗi thành viên vẫn phải Sync và chạy app trước khi gửi PR.
 
 ## 4. Nguyên tắc làm việc nhóm
 
