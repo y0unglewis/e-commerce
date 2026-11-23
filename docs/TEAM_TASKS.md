@@ -1,12 +1,12 @@
 # Phân công nhóm 3 người — E-commerce GearHub
 
-> Điền đủ họ tên/MSSV trước khi nộp. Chỉ ghi chức năng **thực sự hoàn thành**.
+> File này chỉ theo dõi **vai trò và chức năng** trong source. Thông tin cá nhân của thành viên có thể điền riêng vào bài nộp theo yêu cầu của cô. Chỉ ghi chức năng **thực sự hoàn thành**.
 
-| Thành viên | Họ tên / MSSV | Chức năng | File chính | Trạng thái |
-| --- | --- | --- | --- | --- |
-| **TV1 — Nhóm trưởng** | Nguyễn Thị Như Ý — `24110070` *(xác nhận lại đúng nhóm môn này)* | Khởi tạo project; UI chung; SQLite; Home; sản phẩm 2 cột; tìm kiếm/lọc; kiểm tra/ghép code | `HomeActivity`, `ProductAdapter`, `model/*`, `database/*`, `res/values/*` | Khung ban đầu |
-| **TV2** | `[Họ tên — MSSV]` | Product Detail; 3 tab Thông số/Mô tả/Đánh giá; nút số lượng; gợi ý sản phẩm | `ProductDetailActivity`, `activity_product_detail.xml`, layout phụ | Chưa bàn giao |
-| **TV3** | `[Họ tên — MSSV]` | Giỏ hàng; tổng tiền; Checkout mô phỏng; xác nhận đơn; Profile | `CartActivity`, `CheckoutActivity`, `ProfileActivity`, layout tương ứng | Chưa bàn giao |
+| Thành viên | Chức năng | File chính | Trạng thái |
+| --- | --- | --- | --- |
+| **TV1 — Nhóm trưởng** | Khởi tạo project; UI chung; SQLite; Home; sản phẩm 2 cột; tìm kiếm/lọc; kiểm tra/ghép code | `HomeActivity`, `ProductAdapter`, `model/*`, `database/*`, `res/values/*` | Khung ban đầu |
+| **TV2** | Product Detail; 3 tab Thông số/Mô tả/Đánh giá; nút số lượng; gợi ý sản phẩm | `ProductDetailActivity`, `activity_product_detail.xml`, layout phụ | Chưa bàn giao |
+| **TV3** | Giỏ hàng; tổng tiền; Checkout mô phỏng; xác nhận đơn; Profile | `CartActivity`, `CheckoutActivity`, `ProfileActivity`, layout tương ứng | Chưa bàn giao |
 
 ## Yêu cầu giao sản phẩm
 
@@ -30,7 +30,7 @@
 - [ ] Profile cùng style, có thông tin tài khoản mẫu.
 - [ ] Chuyển trang/quay lại không crash.
 
-## Trước hạn nộp 23:59 ngày 24/11/2026
+## Trước hạn nộp 00:00 ngày 26/11/2026 (hoàn tất trong ngày 25/11)
 
 - [ ] Cả 3 PR đã merge `develop`.
 - [ ] Mở app được, không crash khi đi từ Home → Detail → Cart → Checkout.
