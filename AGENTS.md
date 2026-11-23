@@ -1,6 +1,6 @@
 # AGENTS.md — Quy tắc làm việc với source GearHub
 
-Đây là dự án Android **Java + XML** phục vụ bài giữa kỳ, thời hạn **24/11/2026**, nhóm **3 thành viên**, ưu tiên **UI/UX** và **code dễ học, dễ giải thích**.
+Đây là dự án Android **Java + XML** phục vụ bài giữa kỳ, hạn nộp **00:00 ngày 26/11/2026** (hoàn tất trước khi kết thúc ngày 25/11), nhóm **3 thành viên**, ưu tiên **UI/UX** và **code dễ học, dễ giải thích**.
 
 ## Bất biến phải giữ
 
