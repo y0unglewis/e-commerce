@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GearHub</string>
+    <string name="home_title">GearHub</string>
+    <string name="search_hint">Tìm phụ kiện công nghệ...</string>
+    <string name="featured_title">Sản phẩm nổi bật</string>
+    <string name="nav_home">Trang chủ</string>
+    <string name="nav_cart">Giỏ hàng</string>
+    <string name="nav_profile">Tài khoản</string>
+    <string name="back">Quay lại</string>
+    <string name="add_to_cart">Thêm vào giỏ</string>
+    <string name="buy_now">Mua ngay</string>
+    <string name="currency_format">%1$s đ</string>
+</resources>
