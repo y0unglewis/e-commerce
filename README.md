@@ -2,17 +2,16 @@
 
 Ứng dụng mua sắm **phụ kiện công nghệ** được viết bằng **Java + XML** cho môn Lập trình di động. Giai đoạn giữa kỳ ưu tiên **giao diện nhất quán và luồng chuyển màn hình rõ ràng**; không có thanh toán thực tế.
 
-> Deadline nhóm: **23:59 ngày 24/11/2026**. Repo dùng cho nhóm 3 thành viên.
+> Bài mở lúc **00:00 ngày 19/11/2026**; hạn nộp **00:00 ngày 26/11/2026** (tức phải hoàn tất trong ngày **25/11/2026**).
 
 ## 1. Trạng thái hiện tại
 
 | Màn hình / phần việc | Trạng thái |
 | --- | --- |
 | Home: sản phẩm 2 cột, tìm kiếm, lọc danh mục, bottom navigation | **Khung chạy được**, tiếp tục hoàn thiện UI |
-| SQLite: bảng `products`, 12 sản phẩm mẫu | **Đã có** |
+| SQLite: bảng `products`, 12 sản phẩm mẫu dùng chung trong source | **Đã có** |
 | Product Detail: ảnh, tên, giá, 3 tab, nút +/- | **Khung chạy được**, TV2 hoàn thiện |
 | Giỏ hàng, Checkout, Profile | **Màn khung**, TV3 hoàn thiện |
-| Thanh toán thật, đăng nhập server, đồng bộ đám mây | **Không nằm trong phạm vi giữa kỳ** |
 
 Ảnh sản phẩm hiện là **Vector Drawable minh họa**. Các thành viên có thể bổ sung ảnh rõ nét theo hướng dẫn chung mà không thay đổi schema SQLite.
 
@@ -20,7 +19,7 @@
 
 - Android **Java** + giao diện **XML**.
 - Material Components, AppCompat, RecyclerView.
-- SQLite có sẵn trong Android; `GearHubDatabaseHelper` tạo database khi chạy lần đầu.
+- SQLite có sẵn trong Android; `GearHubDatabaseHelper` tạo database khi chạy lần đầu. Cả nhóm dùng chung **cấu trúc và dữ liệu mẫu trong source**, nhưng mỗi thiết bị có một database cục bộ riêng, **không tự đồng bộ dữ liệu qua mạng**.
 - `Product implements Serializable` để truyền đối tượng bằng `Intent.putExtra(AppConstants.EXTRA_PRODUCT, product)`.
 - Gradle plugin 8.7.3 / Gradle 8.9 / JDK 17, compileSdk 35.
 
@@ -59,6 +58,6 @@ Một bạn đại diện nộp:
 
 1. Đường link repository GitHub đến commit/nhánh ổn định `main`.
 2. Hình ảnh hoặc file giao diện các màn hình đã hoàn thiện.
-3. Bảng ghi rõ **tên thành viên, MSSV, chức năng đã làm và file đóng góp** (mẫu trong `docs/TEAM_TASKS.md`).
+3. Bảng ghi rõ **tên thành viên, MSSV, chức năng đã làm và file đóng góp** khi nộp bài; trong repo chỉ cần lưu **phân công theo vai trò** (xem `docs/TEAM_TASKS.md`).
 
 Không gửi mật khẩu, token hay file `local.properties` lên GitHub.
