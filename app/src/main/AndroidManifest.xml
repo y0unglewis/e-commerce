@@ -8,16 +8,28 @@
         android:theme="@style/Theme.GearHub">
 
         <!-- Mỗi màn hình có Activity riêng; thành viên phụ trách sửa trong file của mình. -->
+
         <activity android:name=".ui.ProfileActivity" android:exported="false" />
         <activity android:name=".ui.CheckoutActivity" android:exported="false" />
         <activity android:name=".ui.CartActivity" android:exported="false" />
         <activity android:name=".ui.ProductDetailActivity" android:exported="false" />
-        <activity android:name=".ui.HomeActivity" android:exported="true">
+
+        <activity
+            android:name=".ui.RegisterActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.LoginActivity"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+        <activity android:name=".ui.HomeActivity" android:exported="false" />
     </application>
 
 </manifest>
