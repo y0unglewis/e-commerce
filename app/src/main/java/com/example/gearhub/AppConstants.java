@@ -5,6 +5,8 @@ package com.example.gearhub;
  * Cả nhóm không được tự gõ chuỗi khác khi truyền Product.
  */
 public final class AppConstants {
+    public static final String PREF_USER_SESSION = "user_session";
+    public static final String KEY_USERNAME = "username";
     public static final String EXTRA_PRODUCT = "com.example.gearhub.EXTRA_PRODUCT";
 
     public static final String CATEGORY_ALL = "Tất cả";
