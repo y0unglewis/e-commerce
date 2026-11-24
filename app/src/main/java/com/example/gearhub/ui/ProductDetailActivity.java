@@ -13,7 +13,6 @@ import com.example.gearhub.util.PriceFormatter;
 import com.example.gearhub.util.ProductImages;
 import com.google.android.material.tabs.TabLayout;
 
-/** Khung chi tiết do thành viên 2 phát triển thành màn hình hoàn chỉnh. */
 public class ProductDetailActivity extends AppCompatActivity {
     private Product product;
     private TextView tabContent, quantityText;

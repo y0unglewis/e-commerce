@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/** Trang chủ do thành viên 1 phụ trách. */
 public class HomeActivity extends AppCompatActivity {
     private final List<Product> allProducts = new ArrayList<>();
     private ProductAdapter adapter;
