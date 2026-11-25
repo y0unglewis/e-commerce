@@ -1,62 +1,180 @@
 package com.example.gearhub.ui;
 
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.gearhub.AppConstants;
 import com.example.gearhub.R;
+import com.example.gearhub.adapter.RelatedProductAdapter;
+import com.example.gearhub.database.GearHubDatabaseHelper;
 import com.example.gearhub.model.Product;
+import com.example.gearhub.util.HomeProductImages;
 import com.example.gearhub.util.PriceFormatter;
-import com.example.gearhub.util.ProductImages;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class ProductDetailActivity extends AppCompatActivity {
+    private static final String[] TAB_TITLES = {"Thông số", "Mô tả", "Đánh giá"};
+    private static final int RELATED_MIN = 4;
+
     private Product product;
-    private TextView tabContent, quantityText;
+    private TextView quantityText, subtotalText, emptyRelatedText;
+    private View[] tabPages;
+    private RelatedProductAdapter relatedAdapter;
     private int quantity = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
-        if (!readProduct()) return;
+        product = readProduct();
+        if (product == null) {
+            Toast.makeText(this, "Không tìm thấy sản phẩm", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+        initViews();
         bindProduct();
         setupTabs();
         setupActions();
+        loadRelatedProducts();
     }
 
-    private boolean readProduct() {
-        // Serializable giúp truyền một Product qua Intent đơn giản cho bài học.
-        Object extra = getIntent().getSerializableExtra(AppConstants.EXTRA_PRODUCT);
-        if (!(extra instanceof Product)) {
-            Toast.makeText(this, "Không tìm thấy sản phẩm", Toast.LENGTH_SHORT).show();
-            finish();
-            return false;
-        }
-        product = (Product) extra;
-        return true;
+    @SuppressWarnings("deprecation")
+    private Product readProduct() {
+        Object extra = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                ? getIntent().getSerializableExtra(AppConstants.EXTRA_PRODUCT, Product.class)
+                : getIntent().getSerializableExtra(AppConstants.EXTRA_PRODUCT);
+        return extra instanceof Product ? (Product) extra : null;
+    }
+
+    private void initViews() {
+        quantityText = findViewById(R.id.txtQuantity);
+        subtotalText = findViewById(R.id.txtSubtotalPrice);
+        emptyRelatedText = findViewById(R.id.txtEmptyRelated);
+        tabPages = new View[]{findViewById(R.id.layoutTabSpecs),
+                findViewById(R.id.layoutTabDescription), findViewById(R.id.layoutTabReviews)};
+
+        RecyclerView recycler = findViewById(R.id.recyclerRelatedProducts);
+        recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        relatedAdapter = new RelatedProductAdapter(item -> startActivity(productIntent(ProductDetailActivity.class, item)));
+        recycler.setAdapter(relatedAdapter);
     }
 
     private void bindProduct() {
         ImageView image = findViewById(R.id.imgDetailProduct);
-        image.setImageResource(ProductImages.forKey(product.getImageKey()));
-        ((TextView) findViewById(R.id.txtDetailBrand)).setText(product.getBrand());
-        ((TextView) findViewById(R.id.txtDetailName)).setText(product.getName());
-        ((TextView) findViewById(R.id.txtDetailPrice)).setText(PriceFormatter.format(product.getPrice()));
-        tabContent = findViewById(R.id.txtTabContent);
-        quantityText = findViewById(R.id.txtQuantity);
-        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+        image.setImageResource(HomeProductImages.forProduct(product));
+        image.setContentDescription(product.getName());
+        setText(R.id.txtDetailBrand, product.getBrand());
+        setText(R.id.txtDetailCategory, product.getCategory());
+        setText(R.id.txtDetailName, product.getName());
+        setText(R.id.txtDetailPrice, PriceFormatter.format(product.getPrice()));
+        setText(R.id.txtDetailRatingBadge, String.format(Locale.getDefault(), "★ %.1f / 5.0", product.getRating()));
+        setText(R.id.txtReviewScoreBig, String.format(Locale.getDefault(), "%.1f", product.getRating()));
+
+        TextView original = findViewById(R.id.txtDetailOriginalPrice);
+        TextView discount = findViewById(R.id.txtDetailDiscountBadge);
+        boolean onSale = product.getOriginalPrice() > product.getPrice();
+        original.setVisibility(onSale ? View.VISIBLE : View.GONE);
+        discount.setVisibility(onSale ? View.VISIBLE : View.GONE);
+        if (onSale) {
+            original.setText(PriceFormatter.format(product.getOriginalPrice()));
+            original.setPaintFlags(original.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            discount.setText(String.format(Locale.getDefault(), "-%d%%",
+                    Math.round((1.0 - (double) product.getPrice() / product.getOriginalPrice()) * 100)));
+        }
+
+        populateSpecs();
+        populateDescription();
+        populateReviews();
+        updateQuantity(0);
+    }
+
+    private void populateSpecs() {
+        LinearLayout container = findViewById(R.id.containerSpecRows);
+        addSpecRow(container, "Thương hiệu", product.getBrand(), true);
+        addSpecRow(container, "Danh mục", product.getCategory(), false);
+        String specs = product.getSpecifications() == null ? "" : product.getSpecifications();
+        int index = 0;
+        for (String line : specs.split("\\n")) {
+            line = line.trim();
+            if (line.isEmpty()) continue;
+            int colon = line.indexOf(':');
+            addSpecRow(container,
+                    colon > 0 ? line.substring(0, colon).trim() : "Thông số " + (index + 1),
+                    colon > 0 ? line.substring(colon + 1).trim() : line,
+                    index++ % 2 == 0);
+        }
+    }
+
+    private void addSpecRow(LinearLayout container, String label, String value, boolean highlight) {
+        LinearLayout row = new LinearLayout(this);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        row.setPadding(dp(12), dp(10), dp(12), dp(10));
+        if (highlight) row.setBackgroundResource(R.drawable.bg_product_icon);
+        row.addView(createText(label, R.color.gear_muted, 14, false), new LinearLayout.LayoutParams(0, WRAP_CONTENT, 1f));
+        row.addView(createText(value, R.color.gear_text, 14, true), new LinearLayout.LayoutParams(0, WRAP_CONTENT, 1.3f));
+        container.addView(row);
+    }
+
+    private void populateDescription() {
+        setText(R.id.txtDescriptionBody, product.getDescription() + "\n\nSản phẩm " + product.getName()
+                + " chính hãng từ " + product.getBrand()
+                + " được thiết kế tối ưu cho nhu cầu học tập, làm việc và giải trí hằng ngày với độ bền cao.");
+        setText(R.id.txtDescriptionHighlights, "• Sản phẩm mới 100%, nguyên hộp chính hãng " + product.getBrand()
+                + "\n• Hỗ trợ đổi trả trong 7 ngày nếu phát sinh lỗi từ nhà sản xuất"
+                + "\n• Tư vấn kỹ thuật và bảo hành nhanh chóng tại hệ thống GearHub");
+    }
+
+    private void populateReviews() {
+        String[][] reviews = {
+                {"Minh Quân", "★★★★★  •  2 ngày trước", "Sản phẩm " + product.getName()
+                        + " đóng gói rất kỹ, hoàn thiện chắc chắn và dùng cực kỳ ổn định."},
+                {"Thu Hà", "★★★★★  •  1 tuần trước", "Đúng hàng chính hãng " + product.getBrand()
+                        + ", giao hàng nhanh, chất lượng vượt mong đợi trong tầm giá."},
+                {"Hoàng Nam", "★★★★☆  •  2 tuần trước",
+                        "Trải nghiệm thực tế tốt, thiết kế gọn đẹp, pin và độ nhạy đều đúng như thông số công bố."}
+        };
+        LinearLayout container = findViewById(R.id.containerReviews);
+        for (String[] r : reviews) {
+            LinearLayout header = new LinearLayout(this);
+            header.setGravity(Gravity.CENTER_VERTICAL);
+            header.addView(createText(r[0], R.color.gear_text, 14, true), new LinearLayout.LayoutParams(0, WRAP_CONTENT, 1f));
+            header.addView(createText(r[1], R.color.gear_accent, 12, false));
+
+            TextView comment = createText(r[2], R.color.gear_muted, 14, false);
+            comment.setPadding(0, dp(4), 0, 0);
+
+            LinearLayout box = new LinearLayout(this);
+            box.setOrientation(LinearLayout.VERTICAL);
+            box.setPadding(0, dp(10), 0, dp(10));
+            box.addView(header);
+            box.addView(comment);
+            container.addView(box);
+        }
     }
 
     private void setupTabs() {
         TabLayout tabs = findViewById(R.id.detailTabs);
-        tabs.addTab(tabs.newTab().setText("Thông số"));
-        tabs.addTab(tabs.newTab().setText("Mô tả"));
-        tabs.addTab(tabs.newTab().setText("Đánh giá"));
-        tabContent.setText(product.getSpecifications());
+        for (String title : TAB_TITLES) tabs.addTab(tabs.newTab().setText(title));
+        showTab(0);
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override public void onTabSelected(TabLayout.Tab tab) { showTab(tab.getPosition()); }
             @Override public void onTabUnselected(TabLayout.Tab tab) { }
@@ -65,26 +183,71 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void showTab(int index) {
-        if (index == 0) tabContent.setText(product.getSpecifications());
-        else if (index == 1) tabContent.setText(product.getDescription());
-        else tabContent.setText("★ " + product.getRating()
-                + " / 5\n\nĐánh giá thực tế sẽ được thành viên 2 bổ sung.");
+        for (int i = 0; i < tabPages.length; i++) tabPages[i].setVisibility(i == index ? View.VISIBLE : View.GONE);
     }
 
     private void setupActions() {
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+        findViewById(R.id.btnDetailCart).setOnClickListener(v -> startActivity(new Intent(this, CartActivity.class)));
         findViewById(R.id.btnMinus).setOnClickListener(v -> updateQuantity(-1));
         findViewById(R.id.btnPlus).setOnClickListener(v -> updateQuantity(1));
-        findViewById(R.id.btnAddToCart).setOnClickListener(v ->
-                Toast.makeText(this, "Chờ thành viên 3 tích hợp giỏ hàng", Toast.LENGTH_SHORT).show());
-        findViewById(R.id.btnBuyNow).setOnClickListener(v -> {
-            Intent intent = new Intent(this, CheckoutActivity.class);
-            intent.putExtra(AppConstants.EXTRA_PRODUCT, product);
-            startActivity(intent);
-        });
+        findViewById(R.id.btnAddToCart).setOnClickListener(v -> Snackbar.make(v,
+                        "Đã chọn " + quantity + " × " + product.getName() + " (chờ tích hợp giỏ hàng)",
+                        Snackbar.LENGTH_SHORT)
+                .setAction("Xem giỏ", view -> startActivity(new Intent(this, CartActivity.class)))
+                .show());
+        findViewById(R.id.btnBuyNow).setOnClickListener(v -> startActivity(productIntent(CheckoutActivity.class, product)));
     }
 
     private void updateQuantity(int delta) {
         quantity = Math.max(1, Math.min(99, quantity + delta));
         quantityText.setText(String.valueOf(quantity));
+        subtotalText.setText(PriceFormatter.format(product.getPrice() * quantity));
+    }
+
+    private void loadRelatedProducts() {
+        new Thread(() -> {
+            try {
+                List<Product> related = new ArrayList<>();
+                List<Product> sameBrand = new ArrayList<>();
+                List<Product> others = new ArrayList<>();
+                for (Product item : GearHubDatabaseHelper.getInstance(this).getAllProducts()) {
+                    if (item.getId() == product.getId()) continue;
+                    if (item.getCategory().equals(product.getCategory())) related.add(item);
+                    else if (item.getBrand().equalsIgnoreCase(product.getBrand())) sameBrand.add(item);
+                    else others.add(item);
+                }
+                related.addAll(sameBrand);
+                for (int i = 0; related.size() < RELATED_MIN && i < others.size(); i++) related.add(others.get(i));
+                runOnUiThread(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    relatedAdapter.setProducts(related);
+                    emptyRelatedText.setVisibility(related.isEmpty() ? View.VISIBLE : View.GONE);
+                });
+            } catch (Exception e) {
+                runOnUiThread(() -> emptyRelatedText.setVisibility(View.VISIBLE));
+            }
+        }).start();
+    }
+
+    private Intent productIntent(Class<?> target, Product item) {
+        return new Intent(this, target).putExtra(AppConstants.EXTRA_PRODUCT, item);
+    }
+
+    private TextView createText(String text, int colorRes, float sizeSp, boolean bold) {
+        TextView view = new TextView(this);
+        view.setText(text);
+        view.setTextColor(ContextCompat.getColor(this, colorRes));
+        view.setTextSize(sizeSp);
+        if (bold) view.setTypeface(null, Typeface.BOLD);
+        return view;
+    }
+
+    private void setText(int viewId, CharSequence text) {
+        ((TextView) findViewById(viewId)).setText(text);
+    }
+
+    private int dp(int value) {
+        return Math.round(value * getResources().getDisplayMetrics().density);
     }
 }
