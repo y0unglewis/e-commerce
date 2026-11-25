@@ -6,9 +6,10 @@ SQLite là **database cục bộ trên từng thiết bị**, không phải data
 
 - `database/GearHubDatabaseHelper.java`: chủ sở hữu **TV1**; tạo SQLite, đọc sản phẩm và xác thực tài khoản.
 - `database/SampleProducts.java` + `ExpandedProducts.java`: 24 bản ghi khởi tạo lần đầu (6 sản phẩm mỗi danh mục).
+- `database/SampleReviews.java`: bộ dữ liệu đánh giá mẫu đa dạng (16 người dùng, 3–4 đánh giá mỗi sản phẩm).
 - `model/Product.java`: kiểu dữ liệu dùng chung cho UI.
 
-## Schema v4
+## Schema v5
 
 Bảng `products`:
 
@@ -39,24 +40,25 @@ TV2/TV3 nên gọi `GearHubDatabaseHelper.getInstance(context).getAllProducts()`
 
 Mật khẩu lưu dưới dạng PBKDF2 với salt riêng; không lưu mật khẩu gốc. SessionManager chỉ lưu username. Giỏ hàng lưu trong RAM, xóa khi đăng xuất hoặc đổi tài khoản; đơn hàng và thanh toán chỉ mô phỏng, không có bảng lịch sử đơn hàng.
 
-## Bảng `reviews` (từ v4)
+## Bảng `reviews` (từ v4, nâng cấp ở v5)
 
 | Cột | Kiểu | Ý nghĩa |
 | --- | --- | --- |
 | `id` | INTEGER PRIMARY KEY AUTOINCREMENT | ID tự tăng |
-| `product_id` | INTEGER NOT NULL | ID sản phẩm được đánh giá |
+| `product_id` | INTEGER NOT NULL | ID sản phẩm (`FOREIGN KEY` → `products(id) ON DELETE CASCADE`) |
 | `username` | TEXT NOT NULL | Tên người đánh giá |
 | `rating` | INTEGER NOT NULL | Điểm sao (`1..5`) |
 | `comment` | TEXT NOT NULL | Nội dung nhận xét |
 | `created_at` | TEXT NOT NULL | Thời gian tạo (`dd/MM/yyyy HH:mm`) |
 
-Khởi tạo sẵn 2 đánh giá mẫu cho mỗi sản phẩm khi tạo database hoặc nâng cấp `v3 → v4`.
+- Index: `idx_reviews_product_id` trên `reviews(product_id)` tăng tốc truy vấn theo sản phẩm.
+- Khởi tạo 3–4 đánh giá đa dạng người dùng/điểm sao cho mỗi sản phẩm từ `SampleReviews`, và tự động đồng bộ `products.rating` (`ROUND(AVG(rating), 1)`) khi thêm (`addReview`) hoặc xóa (`deleteReview`).
 
 ## Lưu ý thay đổi schema
 
 - `onCreate(SQLiteDatabase)` chỉ gọi khi database chưa được tạo; **không chạy lại mỗi lần mở app**.
 - Nếu chỉ sửa dữ liệu mẫu ở `SampleProducts`, app **đã cài trước đó không tự nhận bản ghi mới**. Cần có luồng cập nhật dữ liệu hoặc gỡ cài đặt/clear storage khi đang thử nghiệm (**sẽ xóa dữ liệu cục bộ**).
-- `DB_VERSION` hiện tại là `4`: migration `v1 → v2` thêm bảng `users`; `v2 → v3` bổ sung ID `13–24` bằng `CONFLICT_IGNORE`; `v3 → v4` thêm bảng `reviews` và seed đánh giá mẫu cho từng sản phẩm (bỏ qua nếu bảng đã có dữ liệu). Không xóa database của người dùng để sửa lỗi.
+- `DB_VERSION` hiện tại là `5`: `v1 → v2` thêm bảng `users`; `v2 → v3` bổ sung ID `13–24` bằng `CONFLICT_IGNORE`; `v3 → v4` thêm bảng `reviews`; `v4 → v5` bổ sung `FOREIGN KEY` + index `idx_reviews_product_id`, thay seed trùng ở v4 bằng `SampleReviews` đa dạng (giữ nguyên đánh giá người dùng đã gửi) và đồng bộ `products.rating`. Không xóa database của người dùng để sửa lỗi.
 - Đừng commit file `gearhub.db`; `*.db` đã nằm trong `.gitignore`.
 
 ## Xem database bằng Android Studio

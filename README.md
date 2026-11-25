@@ -10,12 +10,12 @@
 | --- | --- |
 | Login/Register | Xác thực SQLite, PBKDF2, lưu session |
 | Home | Grid 2 cột, Search, Advanced Filter, RecyclerView + ConcatAdapter |
-| SQLite | Schema v3, 24 sản phẩm, 6 sản phẩm mỗi danh mục |
+| SQLite | Schema v5, 24 sản phẩm (6 sản phẩm/danh mục), bảng tài khoản và đánh giá |
 | Product Detail | 3 tab, sản phẩm liên quan, số lượng, thêm vào giỏ và mua ngay |
 | Profile | Username từ session, đăng xuất |
 | Cart/Checkout/Order Success | Giỏ hàng RAM, tổng tiền, kiểm tra form, đặt hàng demo |
 
-Ảnh sản phẩm dùng chung 24 WebP trong drawable-nodpi. Thanh toán và đánh giá chỉ minh họa; không có giao dịch thật hay lưu lịch sử đơn hàng. Giỏ hàng không lưu khi tiến trình bị đóng.
+Ảnh sản phẩm dùng chung 24 WebP trong drawable-nodpi. Đánh giá sản phẩm được lưu cục bộ bằng SQLite; thanh toán chỉ minh họa, không có giao dịch thật hay lưu lịch sử đơn hàng. Giỏ hàng không lưu khi tiến trình bị đóng.
 
 ## 2. Công nghệ
 

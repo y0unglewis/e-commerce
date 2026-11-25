@@ -15,7 +15,7 @@ import java.util.List;
 
 public class GearHubDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "gearhub.db";
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 5;
     private static final String TABLE_PRODUCTS = "products";
     private static final String TABLE_USERS = "users";
     private static final String TABLE_REVIEWS = "reviews";
@@ -33,6 +33,12 @@ public class GearHubDatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
+    public void onConfigure(SQLiteDatabase db) {
+        super.onConfigure(db);
+        db.setForeignKeyConstraintsEnabled(true);
+    }
+
+    @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_PRODUCTS + " ("
                 + "id INTEGER PRIMARY KEY, "
@@ -47,7 +53,7 @@ public class GearHubDatabaseHelper extends SQLiteOpenHelper {
         }
         createUsersTable(db);
         createReviewsTable(db);
-        seedSampleReviews(db);
+        seedMissingProductReviews(db);
     }
 
     @Override
@@ -72,7 +78,15 @@ public class GearHubDatabaseHelper extends SQLiteOpenHelper {
 
         if (oldVersion < 4) {
             createReviewsTable(db);
-            seedSampleReviews(db);
+        }
+
+        if (oldVersion < 5) {
+            createReviewsTable(db);
+            // Xóa dữ liệu seed 2 người trùng lặp ở v4, giữ nguyên đánh giá do người dùng tự gửi.
+            db.delete(TABLE_REVIEWS,
+                    "(username = ? AND created_at = ?) OR (username = ? AND created_at = ?)",
+                    new String[]{"Thu Hà", "20/11/2026", "Minh Quân", "23/11/2026"});
+            seedMissingProductReviews(db);
         }
     }
 
@@ -90,31 +104,50 @@ public class GearHubDatabaseHelper extends SQLiteOpenHelper {
                 + "username TEXT NOT NULL, "
                 + "rating INTEGER NOT NULL, "
                 + "comment TEXT NOT NULL, "
-                + "created_at TEXT NOT NULL)");
+                + "created_at TEXT NOT NULL, "
+                + "FOREIGN KEY(product_id) REFERENCES " + TABLE_PRODUCTS + "(id) ON DELETE CASCADE)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_reviews_product_id ON "
+                + TABLE_REVIEWS + "(product_id)");
     }
 
-    private void seedSampleReviews(SQLiteDatabase db) {
-        try (Cursor countCursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_REVIEWS, null)) {
-            if (countCursor.moveToFirst() && countCursor.getInt(0) > 0) return;
-        }
+    private void seedMissingProductReviews(SQLiteDatabase db) {
         db.beginTransaction();
-        try (Cursor products = db.query(TABLE_PRODUCTS, new String[]{"id", "name", "brand"},
+        try (Cursor products = db.query(TABLE_PRODUCTS,
+                new String[]{"id", "name", "brand", "category"},
                 null, null, null, null, "id ASC")) {
             while (products.moveToNext()) {
                 int productId = products.getInt(0);
-                String name = products.getString(1);
-                String brand = products.getString(2);
-                db.insert(TABLE_REVIEWS, null, reviewValues(productId, "Thu Hà", 5,
-                        "Đúng hàng chính hãng " + brand + ", giao hàng nhanh, chất lượng vượt mong đợi trong tầm giá.",
-                        "20/11/2026"));
-                db.insert(TABLE_REVIEWS, null, reviewValues(productId, "Minh Quân", 5,
-                        "Sản phẩm " + name + " đóng gói rất kỹ, hoàn thiện chắc chắn và dùng cực kỳ ổn định.",
-                        "23/11/2026"));
+                if (countReviews(db, productId) > 1) continue;
+                List<ContentValues> samples = SampleReviews.forProduct(
+                        productId, products.getString(1), products.getString(2), products.getString(3));
+                for (ContentValues values : samples) {
+                    db.insert(TABLE_REVIEWS, null, values);
+                }
             }
+            refreshAllProductRatings(db);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
         }
+    }
+
+    private int countReviews(SQLiteDatabase db, int productId) {
+        try (Cursor c = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_REVIEWS + " WHERE product_id = ?",
+                new String[]{String.valueOf(productId)})) {
+            return c.moveToFirst() ? c.getInt(0) : 0;
+        }
+    }
+
+    private void refreshProductRating(SQLiteDatabase db, int productId) {
+        db.execSQL("UPDATE " + TABLE_PRODUCTS + " SET rating = COALESCE("
+                + "(SELECT ROUND(AVG(rating), 1) FROM " + TABLE_REVIEWS + " WHERE product_id = ?), rating) "
+                + "WHERE id = ?", new Object[]{productId, productId});
+    }
+
+    private void refreshAllProductRatings(SQLiteDatabase db) {
+        db.execSQL("UPDATE " + TABLE_PRODUCTS + " SET rating = COALESCE("
+                + "(SELECT ROUND(AVG(rating), 1) FROM " + TABLE_REVIEWS
+                + " WHERE " + TABLE_REVIEWS + ".product_id = " + TABLE_PRODUCTS + ".id), rating)");
     }
 
     public List<Review> getReviewsByProduct(int productId) {
@@ -143,11 +176,38 @@ public class GearHubDatabaseHelper extends SQLiteOpenHelper {
 
     public long addReview(int productId, String username, int rating, String comment, String createdAt) {
         int clampedRating = Math.max(1, Math.min(5, rating));
-        return getWritableDatabase().insert(TABLE_REVIEWS, null,
-                reviewValues(productId, username, clampedRating, comment, createdAt));
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            long rowId = db.insert(TABLE_REVIEWS, null,
+                    reviewValues(productId, username, clampedRating, comment, createdAt));
+            if (rowId != -1) {
+                refreshProductRating(db, productId);
+            }
+            db.setTransactionSuccessful();
+            return rowId;
+        } finally {
+            db.endTransaction();
+        }
     }
 
-    private static ContentValues reviewValues(int productId, String username, int rating, String comment, String createdAt) {
+    public int deleteReview(long reviewId, String username, int productId) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            int rows = db.delete(TABLE_REVIEWS, "id = ? AND username = ?",
+                    new String[]{String.valueOf(reviewId), username});
+            if (rows > 0) {
+                refreshProductRating(db, productId);
+            }
+            db.setTransactionSuccessful();
+            return rows;
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    static ContentValues reviewValues(int productId, String username, int rating, String comment, String createdAt) {
         ContentValues values = new ContentValues();
         values.put("product_id", productId);
         values.put("username", username);
