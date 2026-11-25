@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.gearhub.R;
 import com.example.gearhub.model.Product;
-import com.example.gearhub.util.DetailProductImages;
+import com.example.gearhub.util.HomeProductImages;
 import com.example.gearhub.util.PriceFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,8 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Product product = items.get(position);
-        holder.image.setImageResource(DetailProductImages.forProduct(product));
+        holder.image.setImageResource(HomeProductImages.forProduct(product));
+        holder.image.setContentDescription(product.getName());
         holder.brand.setText(product.getBrand());
         holder.name.setText(product.getName());
         holder.rating.setText(String.format(Locale.getDefault(), "★ %.1f", product.getRating()));

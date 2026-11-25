@@ -22,7 +22,7 @@ import com.example.gearhub.R;
 import com.example.gearhub.adapter.RelatedProductAdapter;
 import com.example.gearhub.database.GearHubDatabaseHelper;
 import com.example.gearhub.model.Product;
-import com.example.gearhub.util.DetailProductImages;
+import com.example.gearhub.util.HomeProductImages;
 import com.example.gearhub.util.PriceFormatter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -79,7 +79,9 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void bindProduct() {
-        ((ImageView) findViewById(R.id.imgDetailProduct)).setImageResource(DetailProductImages.forProduct(product));
+        ImageView image = findViewById(R.id.imgDetailProduct);
+        image.setImageResource(HomeProductImages.forProduct(product));
+        image.setContentDescription(product.getName());
         setText(R.id.txtDetailBrand, product.getBrand());
         setText(R.id.txtDetailCategory, product.getCategory());
         setText(R.id.txtDetailName, product.getName());
