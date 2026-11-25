@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.gearhub.R;
 import com.example.gearhub.model.Product;
 import com.example.gearhub.util.PriceFormatter;
-import com.example.gearhub.util.ProductImages;
+import com.example.gearhub.util.HomeProductImages;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -32,7 +32,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void setProducts(List<Product> updated) {
         products.clear();
         products.addAll(updated);
-        notifyDataSetChanged(); // Danh sách mẫu nhỏ; TV1 có thể chuyển sang DiffUtil sau.
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -46,7 +46,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = products.get(position);
-        holder.image.setImageResource(ProductImages.forKey(product.getImageKey()));
+        holder.image.setImageResource(
+            HomeProductImages.forProduct(product)
+        );
+        holder.image.setContentDescription(product.getName());
         holder.brand.setText(product.getBrand());
         holder.name.setText(product.getName());
         holder.rating.setText(String.format(Locale.getDefault(), "★ %.1f", product.getRating()));
