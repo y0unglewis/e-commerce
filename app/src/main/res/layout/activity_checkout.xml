@@ -4,31 +4,358 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gear_background"
-    android:orientation="vertical"
-    android:padding="20dp">
+    android:orientation="vertical">
 
-    <!-- TV3 hoàn thiện địa chỉ, phương thức trả tiền mô phỏng và tóm tắt đơn. -->
-    <TextView
+    <!-- Top App Bar / Header -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thanh toán"
-        android:textColor="@color/gear_text"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
 
-    <TextView
+        <ImageView
+            android:id="@+id/btnCheckoutBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Quay lại"
+            android:padding="8dp"
+            android:src="@drawable/ic_back"
+            app:tint="@color/gear_text" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="Thanh toán"
+            android:textColor="@color/gear_text"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="Màn hình thanh toán mẫu\nKhông kết nối cổng thanh toán thật."
-        android:textColor="@color/gear_muted"
-        android:textSize="16sp" />
+        android:fillViewport="true">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnPlaceOrder"
-        style="@style/Widget.GearHub.PrimaryButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Xác nhận đặt hàng (demo)" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Card 1: Thông tin người nhận -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/gear_surface"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/gear_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thông tin giao hàng"
+                        android:textColor="@color/gear_text"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <!-- Họ và tên -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutCheckoutName"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="Họ và tên người nhận *"
+                        app:boxBackgroundColor="@color/gear_surface"
+                        app:boxStrokeColor="@color/gear_primary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputCheckoutName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:singleLine="true"
+                            android:textColor="@color/gear_text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Số điện thoại -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutCheckoutPhone"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Số điện thoại *"
+                        app:boxBackgroundColor="@color/gear_surface"
+                        app:boxStrokeColor="@color/gear_primary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputCheckoutPhone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="phone"
+                            android:singleLine="true"
+                            android:textColor="@color/gear_text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Địa chỉ giao hàng -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutCheckoutAddress"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Địa chỉ nhận hàng chi tiết *"
+                        app:boxBackgroundColor="@color/gear_surface"
+                        app:boxStrokeColor="@color/gear_primary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputCheckoutAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPostalAddress"
+                            android:singleLine="true"
+                            android:textColor="@color/gear_text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Ghi chú đơn hàng -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutCheckoutNote"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Ghi chú đơn hàng (tùy chọn)"
+                        app:boxBackgroundColor="@color/gear_surface"
+                        app:boxStrokeColor="@color/gear_primary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputCheckoutNote"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:textColor="@color/gear_text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card 2: Phương thức thanh toán demo -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/gear_surface"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/gear_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phương thức thanh toán (Demo)"
+                        android:textColor="@color/gear_text"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupPayment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
+
+                        <RadioButton
+                            android:id="@+id/radioCOD"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:text="Thanh toán khi nhận hàng (COD)"
+                            android:textColor="@color/gear_text"
+                            android:textSize="14sp" />
+
+                        <RadioButton
+                            android:id="@+id/radioBankTransfer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:text="Chuyển khoản ngân hàng (Demo)"
+                            android:textColor="@color/gear_text"
+                            android:textSize="14sp" />
+
+                        <RadioButton
+                            android:id="@+id/radioEWallet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:text="Ví điện tử MoMo / ZaloPay (Demo)"
+                            android:textColor="@color/gear_text"
+                            android:textSize="14sp" />
+                    </RadioGroup>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card 3: Tóm tắt đơn hàng -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/gear_surface"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/gear_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Đơn hàng của bạn"
+                        android:textColor="@color/gear_text"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <!-- Danh sách sản phẩm thu gọn trong checkout -->
+                    <LinearLayout
+                        android:id="@+id/layoutCheckoutProductList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/gear_border" />
+
+                    <!-- Tạm tính -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Tạm tính:"
+                            android:textColor="@color/gear_muted"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/txtCheckoutSubtotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 đ"
+                            android:textColor="@color/gear_text"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <!-- Phí giao hàng -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Phí vận chuyển:"
+                            android:textColor="@color/gear_muted"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/txtCheckoutShippingFee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Miễn phí"
+                            android:textColor="@color/gear_primary"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/gear_border" />
+
+                    <!-- Tổng thanh toán -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Tổng thanh toán:"
+                            android:textColor="@color/gear_text"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txtCheckoutTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 đ"
+                            android:textColor="@color/gear_primary"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Nút xác nhận đặt hàng -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPlaceOrder"
+                style="@style/Widget.GearHub.PrimaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
+                android:text="Xác nhận đặt hàng (demo)" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

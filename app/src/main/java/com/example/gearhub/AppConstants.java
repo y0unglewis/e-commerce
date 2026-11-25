@@ -8,6 +8,16 @@ public final class AppConstants {
     public static final String PREF_USER_SESSION = "user_session";
     public static final String KEY_USERNAME = "authenticated_username";
     public static final String EXTRA_PRODUCT = "com.example.gearhub.EXTRA_PRODUCT";
+    public static final String EXTRA_QUANTITY = "extra_quantity";
+
+    // Khóa Intent dùng cho OrderSuccessActivity
+    public static final String EXTRA_ORDER_CODE = "extra_order_code";
+    public static final String EXTRA_RECIPIENT_NAME = "extra_recipient_name";
+    public static final String EXTRA_PHONE = "extra_phone";
+    public static final String EXTRA_ADDRESS = "extra_address";
+    public static final String EXTRA_PAYMENT_METHOD = "extra_payment_method";
+    public static final String EXTRA_TOTAL_AMOUNT = "extra_total_amount";
+    public static final String EXTRA_ORDER_TIME = "extra_order_time";
 
     public static final String CATEGORY_ALL = "Tất cả";
     public static final String CATEGORY_HEADPHONES = "Tai nghe";

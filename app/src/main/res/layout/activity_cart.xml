@@ -4,31 +4,170 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gear_background"
-    android:orientation="vertical"
-    android:padding="20dp">
+    android:orientation="vertical">
 
-    <!-- TV3 tiếp quản layout này để hiện các CartItem thực tế. -->
-    <TextView
+    <!-- Top App Bar / Header -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Giỏ hàng"
-        android:textColor="@color/gear_text"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
 
-    <TextView
+        <ImageView
+            android:id="@+id/btnCartBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Quay lại"
+            android:padding="8dp"
+            android:src="@drawable/ic_back"
+            app:tint="@color/gear_text" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="Giỏ hàng"
+            android:textColor="@color/gear_text"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtCartItemCountHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(0 món)"
+            android:textColor="@color/gear_muted"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Khung nội dung chính -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="Giỏ hàng đang được phát triển.\nHãy quay lại chọn sản phẩm nhé!"
-        android:textColor="@color/gear_muted"
-        android:textSize="16sp" />
+        android:layout_weight="1">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCheckout"
-        style="@style/Widget.GearHub.PrimaryButton"
+        <!-- Danh sách Cart Item -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerCart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp" />
+
+        <!-- Trạng thái giỏ hàng rỗng (Empty State) -->
+        <LinearLayout
+            android:id="@+id/layoutCartEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/bg_product_icon"
+                android:contentDescription="Giỏ hàng trống"
+                android:padding="20dp"
+                android:src="@drawable/ic_cart"
+                app:tint="@color/gear_muted" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Giỏ hàng của bạn đang trống"
+                android:textColor="@color/gear_text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Hãy quay lại danh sách sản phẩm để chọn món đồ công nghệ yêu thích nhé!"
+                android:textColor="@color/gear_muted"
+                android:textSize="14sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnContinueShopping"
+                style="@style/Widget.GearHub.PrimaryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:text="Tiếp tục mua sắm" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddSampleToCart"
+                style="@style/Widget.GearHub.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Thêm sản phẩm mẫu (thử nghiệm)" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Thanh tổng kết và Checkout phía dưới -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/layoutCartBottomSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tiếp tục thanh toán" />
+        app:cardBackgroundColor="@color/gear_surface"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="8dp"
+        app:strokeColor="@color/gear_border"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tổng tiền tạm tính:"
+                    android:textColor="@color/gear_muted"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txtCartTotalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 đ"
+                    android:textColor="@color/gear_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCheckout"
+                style="@style/Widget.GearHub.PrimaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Tiếp tục thanh toán" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>
