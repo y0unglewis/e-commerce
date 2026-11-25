@@ -13,6 +13,10 @@ public final class SessionManager {
 
     // Lưu username sau khi đăng nhập thành công.
     public static void saveUsername(Context context, String username) {
+        // Không mang giỏ hàng của tài khoản trước sang tài khoản mới.
+        if (!username.equals(getUsername(context))) {
+            CartManager.getInstance().clearCart();
+        }
         SharedPreferences prefs = context.getSharedPreferences(
             AppConstants.PREF_USER_SESSION,
             Context.MODE_PRIVATE
@@ -35,6 +39,7 @@ public final class SessionManager {
 
     // Xóa phiên đăng nhập khi người dùng đăng xuất.
     public static void clear(Context context) {
+        CartManager.getInstance().clearCart();
         SharedPreferences prefs = context.getSharedPreferences(
             AppConstants.PREF_USER_SESSION,
             Context.MODE_PRIVATE

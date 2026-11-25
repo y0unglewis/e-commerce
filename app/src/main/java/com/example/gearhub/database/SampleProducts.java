@@ -5,7 +5,7 @@ import com.example.gearhub.model.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-/** 12 sản phẩm mẫu; chỉ dùng để điền dữ liệu lần đầu khi tạo SQLite. */
+/** 24 sản phẩm mẫu (12 ban đầu + 12 bổ sung) dùng khi tạo SQLite. */
 final class SampleProducts {
     private SampleProducts() { }
 

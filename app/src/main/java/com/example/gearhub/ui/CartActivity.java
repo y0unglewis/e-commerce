@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gearhub.R;
 import com.example.gearhub.adapter.CartAdapter;
-import com.example.gearhub.database.GearHubDatabaseHelper;
 import com.example.gearhub.model.CartItem;
-import com.example.gearhub.model.Product;
 import com.example.gearhub.util.CartManager;
 import com.example.gearhub.util.PriceFormatter;
 import com.google.android.material.button.MaterialButton;
@@ -37,7 +35,6 @@ public class CartActivity extends AppCompatActivity {
     private TextView txtTotalPrice;
     private MaterialButton btnCheckout;
     private MaterialButton btnContinueShopping;
-    private MaterialButton btnAddSampleToCart;
 
     private CartAdapter cartAdapter;
 
@@ -67,7 +64,6 @@ public class CartActivity extends AppCompatActivity {
         txtTotalPrice = findViewById(R.id.txtCartTotalPrice);
         btnCheckout = findViewById(R.id.btnCheckout);
         btnContinueShopping = findViewById(R.id.btnContinueShopping);
-        btnAddSampleToCart = findViewById(R.id.btnAddSampleToCart);
     }
 
     private void setupRecyclerView() {
@@ -90,22 +86,11 @@ public class CartActivity extends AppCompatActivity {
     private void setupListeners() {
         btnBack.setOnClickListener(v -> finish());
 
-        btnContinueShopping.setOnClickListener(v -> finish());
-
-        btnAddSampleToCart.setOnClickListener(v -> {
-            new Thread(() -> {
-                List<Product> products = GearHubDatabaseHelper.getInstance(this).getAllProducts();
-                if (!products.isEmpty()) {
-                    CartManager.getInstance().addToCart(products.get(0), 1);
-                    if (products.size() > 1) {
-                        CartManager.getInstance().addToCart(products.get(1), 2);
-                    }
-                    runOnUiThread(() -> {
-                        Toast.makeText(this, "Đã thêm sản phẩm mẫu vào giỏ hàng!", Toast.LENGTH_SHORT).show();
-                        loadCartData();
-                    });
-                }
-            }).start();
+        btnContinueShopping.setOnClickListener(v -> {
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
         });
 
         btnCheckout.setOnClickListener(v -> {
@@ -121,6 +106,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void loadCartData() {
         List<CartItem> items = CartManager.getInstance().getItems();
+        cartAdapter.submitList(items);
         boolean isEmpty = items.isEmpty();
 
         if (isEmpty) {
@@ -136,8 +122,6 @@ public class CartActivity extends AppCompatActivity {
             int totalQty = CartManager.getInstance().getTotalQuantity();
             txtHeaderCount.setText("(" + totalQty + " món)");
             txtTotalPrice.setText(PriceFormatter.format(CartManager.getInstance().getTotalPrice()));
-
-            cartAdapter.submitList(items);
         }
     }
 

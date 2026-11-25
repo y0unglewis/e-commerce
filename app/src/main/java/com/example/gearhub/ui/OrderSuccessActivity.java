@@ -22,14 +22,6 @@ import com.google.android.material.button.MaterialButton;
  */
 public class OrderSuccessActivity extends AppCompatActivity {
 
-    public static final String EXTRA_ORDER_CODE = AppConstants.EXTRA_ORDER_CODE;
-    public static final String EXTRA_RECIPIENT_NAME = AppConstants.EXTRA_RECIPIENT_NAME;
-    public static final String EXTRA_PHONE = AppConstants.EXTRA_PHONE;
-    public static final String EXTRA_ADDRESS = AppConstants.EXTRA_ADDRESS;
-    public static final String EXTRA_PAYMENT_METHOD = AppConstants.EXTRA_PAYMENT_METHOD;
-    public static final String EXTRA_TOTAL_AMOUNT = AppConstants.EXTRA_TOTAL_AMOUNT;
-    public static final String EXTRA_ORDER_TIME = AppConstants.EXTRA_ORDER_TIME;
-
     private TextView txtOrderCode;
     private TextView txtRecipient;
     private TextView txtPhone;
@@ -71,13 +63,13 @@ public class OrderSuccessActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent == null) return;
 
-        currentOrderCode = intent.getStringExtra(EXTRA_ORDER_CODE);
-        String recipient = intent.getStringExtra(EXTRA_RECIPIENT_NAME);
-        String phone = intent.getStringExtra(EXTRA_PHONE);
-        String orderTime = intent.getStringExtra(EXTRA_ORDER_TIME);
-        String address = intent.getStringExtra(EXTRA_ADDRESS);
-        String payment = intent.getStringExtra(EXTRA_PAYMENT_METHOD);
-        String total = intent.getStringExtra(EXTRA_TOTAL_AMOUNT);
+        currentOrderCode = intent.getStringExtra(AppConstants.EXTRA_ORDER_CODE);
+        String recipient = intent.getStringExtra(AppConstants.EXTRA_RECIPIENT_NAME);
+        String phone = intent.getStringExtra(AppConstants.EXTRA_PHONE);
+        String orderTime = intent.getStringExtra(AppConstants.EXTRA_ORDER_TIME);
+        String address = intent.getStringExtra(AppConstants.EXTRA_ADDRESS);
+        String payment = intent.getStringExtra(AppConstants.EXTRA_PAYMENT_METHOD);
+        String total = intent.getStringExtra(AppConstants.EXTRA_TOTAL_AMOUNT);
 
         if (currentOrderCode != null && !currentOrderCode.isEmpty()) {
             txtOrderCode.setText(currentOrderCode);
