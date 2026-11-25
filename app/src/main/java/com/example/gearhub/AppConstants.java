@@ -25,6 +25,14 @@ public final class AppConstants {
     public static final String CATEGORY_MICE = "Chuột";
     public static final String CATEGORY_CHARGERS = "Sạc";
 
+    // Quy tắc kiểm tra tài khoản dùng chung.
+    public static final int MIN_USERNAME_LENGTH = 3;
+    public static final int MIN_PASSWORD_LENGTH = 6;
+
+    // Quy ước cho Cart và Detail; dùng khi tích hợp PR của TV2/TV3.
+    public static final int MAX_QUANTITY = 99;
+    public static final String PHONE_PATTERN = "^0[0-9]{9}$";
+
     private AppConstants() {
         // Không tạo đối tượng từ lớp chỉ chứa hằng số.
     }

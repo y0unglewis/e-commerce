@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.gearhub.AppConstants;
 import com.example.gearhub.R;
 import com.example.gearhub.database.GearHubDatabaseHelper;
 import com.example.gearhub.util.SessionManager;
@@ -45,13 +46,13 @@ public class LoginActivity extends AppCompatActivity {
         String password = getValue(inputPassword);
         layoutUsername.setError(null);
         layoutPassword.setError(null);
-        if (username.length() < 3) {
-            layoutUsername.setError("Tên đăng nhập phải có ít nhất 3 ký tự");
+        if (username.length() < AppConstants.MIN_USERNAME_LENGTH) {
+            layoutUsername.setError(getString(R.string.auth_username_min, AppConstants.MIN_USERNAME_LENGTH));
             inputUsername.requestFocus();
             return;
         }
-        if (password.length() < 6 || password.trim().isEmpty()) {
-            layoutPassword.setError("Mật khẩu phải có ít nhất 6 ký tự và không được chỉ có khoảng trắng");
+        if (password.length() < AppConstants.MIN_PASSWORD_LENGTH || password.trim().isEmpty()) {
+            layoutPassword.setError(getString(R.string.auth_password_min, AppConstants.MIN_PASSWORD_LENGTH));
             inputPassword.requestFocus();
             return;
         }
@@ -72,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         if (isFinishing() || isDestroyed()) return;
         setBusy(false);
         if (!valid) {
-            layoutPassword.setError("Tên đăng nhập hoặc mật khẩu không đúng");
+            layoutPassword.setError(getString(R.string.auth_invalid_credentials));
             inputPassword.requestFocus();
             return;
         }
@@ -102,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
     private void showDatabaseError() {
         if (isFinishing() || isDestroyed()) return;
         setBusy(false);
-        Toast.makeText(this, "Không thể kiểm tra tài khoản. Hãy thử lại.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getString(R.string.auth_login_error), Toast.LENGTH_LONG).show();
     }
 
     private void setBusy(boolean busy) {
@@ -110,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
         btnGoRegister.setEnabled(!busy);
         inputUsername.setEnabled(!busy);
         inputPassword.setEnabled(!busy);
-        btnLogin.setText(busy ? "Đang kiểm tra..." : "Đăng nhập");
+        btnLogin.setText(busy ? getString(R.string.auth_login_busy) : getString(R.string.auth_login));
     }
 
     private void openHome() {

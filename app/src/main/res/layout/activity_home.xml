@@ -77,7 +77,7 @@
             android:layout_height="56dp"
             android:layout_marginStart="8dp"
             android:minWidth="64dp"
-            android:text="Lọc"
+            android:text="@string/filter_button"
             android:textAllCaps="false" />
 
     </LinearLayout>
@@ -104,35 +104,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Tất cả" />
+                android:text="@string/category_all" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipHeadphones"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tai nghe" />
+                android:text="@string/category_headphones" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipKeyboards"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bàn phím" />
+                android:text="@string/category_keyboards" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipMice"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chuột" />
+                android:text="@string/category_mice" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipChargers"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sạc" />
+                android:text="@string/category_chargers" />
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 
