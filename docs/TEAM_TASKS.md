@@ -1,12 +1,12 @@
 # Phân công nhóm 3 người — E-commerce GearHub
 
-> Cập nhật ngày 25/11/2026, phạm vi bản giữa kỳ v2. Chỉ ghi vai trò và tính năng thực tế; họ tên, MSSV ghi trong nội dung nộp bài. Quy tắc sửa code/file chung xem [AGENTS.md](../AGENTS.md).
+> Cập nhật ngày 25/11/2026, phạm vi bản giữa kỳ v2. Ghi họ tên, vai trò và tính năng thực tế; MSSV ghi trong nội dung nộp bài. Quy tắc sửa code/file chung xem [AGENTS.md](../AGENTS.md).
 
 | Thành viên | Issues | Phụ trách | Trạng thái |
 | --- | --- | --- | --- |
-| **TV1 — Nhóm trưởng** | [#2 Home/Filter](https://github.com/y0unglewis/e-commerce/issues/2), [#3 Login/Register/Session](https://github.com/y0unglewis/e-commerce/issues/3) | Foundation, Home 2 cột, Search/Advanced Filter, Login/Register SQLite, SessionManager, catalog 24 sản phẩm, tài nguyên dùng chung, tích hợp và kiểm thử | Đã tích hợp vào develop |
-| **TV2** | [#4 Detail](https://github.com/y0unglewis/e-commerce/issues/4), [#5 Profile](https://github.com/y0unglewis/e-commerce/issues/5) | Detail 3 tab, thông số/mô tả/đánh giá, số lượng và sản phẩm liên quan; Profile, username/logout; đọc và gửi đánh giá SQLite | Đã tích hợp vào develop; còn hoàn thiện đồng bộ rating |
-| **TV3** | [#6 Cart/Checkout](https://github.com/y0unglewis/e-commerce/issues/6) | Cart, số lượng/xóa/tổng tiền, Checkout demo, Mua ngay, Order Success, ghi chú đơn hàng; lưu giỏ hàng tạm thời bằng SharedPreferences | Đã tích hợp vào develop; còn chuyển giỏ hàng sang SQLite theo tài khoản |
+| **TV1 — Nguyễn Thị Như Ý (Nhóm trưởng)** | [#2 Home/Filter](https://github.com/y0unglewis/e-commerce/issues/2), [#3 Login/Register/Session](https://github.com/y0unglewis/e-commerce/issues/3) | Foundation, Home 2 cột, Search/Advanced Filter, Login/Register SQLite, SessionManager, catalog 24 sản phẩm, tài nguyên dùng chung, tích hợp và kiểm thử | Đã tích hợp vào develop |
+| **TV2 — Thái Duy Cường** | [#4 Detail](https://github.com/y0unglewis/e-commerce/issues/4), [#5 Profile](https://github.com/y0unglewis/e-commerce/issues/5) | Detail 3 tab, thông số/mô tả/đánh giá, số lượng và sản phẩm liên quan; Profile, username/logout; đọc và gửi đánh giá SQLite | Đã tích hợp vào develop; còn hoàn thiện đồng bộ rating |
+| **TV3 — Phạm Thành Long** | [#6 Cart/Checkout](https://github.com/y0unglewis/e-commerce/issues/6) | Cart, số lượng/xóa/tổng tiền, Checkout demo, Mua ngay, Order Success, ghi chú đơn hàng; lưu giỏ hàng tạm thời bằng SharedPreferences | Đã tích hợp vào develop; còn chuyển giỏ hàng sang SQLite theo tài khoản |
 
 ## File sở hữu
 
