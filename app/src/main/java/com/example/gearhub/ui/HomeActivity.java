@@ -64,12 +64,7 @@ public class HomeActivity extends AppCompatActivity {
         AppConstants.CATEGORY_CHARGERS
     };
 
-    private final String[] sortOptions = {
-        "Mặc định",
-        "Giá thấp đến cao",
-        "Giá cao đến thấp",
-        "Đánh giá cao nhất"
-    };
+    private String[] sortOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +80,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        sortOptions = getResources().getStringArray(R.array.product_sort_options);
         searchInput = findViewById(R.id.inputSearch);
         setupProductList();
 
@@ -224,8 +220,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     Toast.makeText(
                         this,
-                        "Không đọc được sản phẩm: "
-                            + error.getMessage(),
+                        getString(R.string.home_load_error),
                         Toast.LENGTH_LONG
                     ).show();
                 });
@@ -395,7 +390,7 @@ public class HomeActivity extends AppCompatActivity {
                 ? 0 : Long.parseLong(min);
 
         } catch (NumberFormatException e) {
-            layoutMin.setError("Giá không hợp lệ");
+            layoutMin.setError(getString(R.string.filter_price_invalid));
             return false;
         }
 
@@ -404,22 +399,22 @@ public class HomeActivity extends AppCompatActivity {
                 ? Long.MAX_VALUE : Long.parseLong(max);
 
         } catch (NumberFormatException e) {
-            layoutMax.setError("Giá không hợp lệ");
+            layoutMax.setError(getString(R.string.filter_price_invalid));
             return false;
         }
 
         if (newMin < 0) {
-            layoutMin.setError("Giá không được âm");
+            layoutMin.setError(getString(R.string.filter_price_negative));
             return false;
         }
 
         if (newMax < 0) {
-            layoutMax.setError("Giá không được âm");
+            layoutMax.setError(getString(R.string.filter_price_negative));
             return false;
         }
 
         if (newMax < newMin) {
-            layoutMax.setError("Giá tối đa nhỏ hơn giá tối thiểu");
+            layoutMax.setError(getString(R.string.filter_price_order));
             return false;
         }
 
@@ -533,7 +528,7 @@ public class HomeActivity extends AppCompatActivity {
                 || selectedSort != SORT_DEFAULT
                 || !AppConstants.CATEGORY_ALL.equals(selectedCategory);
 
-        button.setText(hasFilter ? "Lọc ✓" : "Lọc");
+        button.setText(hasFilter ? R.string.filter_button_active : R.string.filter_button);
     }
 
     private String getText(TextInputEditText input) {

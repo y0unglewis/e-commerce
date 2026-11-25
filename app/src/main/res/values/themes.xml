@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.GearHub" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Base.Theme.GearHub" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/gear_primary</item>
         <item name="colorPrimaryVariant">@color/gear_primary_dark</item>
         <item name="colorOnPrimary">@color/gear_surface</item>
@@ -11,10 +11,12 @@
         <item name="android:fontFamily">sans</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/gear_background</item>
-        <item name="android:navigationBarColor">@color/gear_surface</item>
-        <item name="android:windowLightNavigationBar">true</item>
+        <!-- API 24–26 dùng biểu tượng điều hướng sáng. -->
+        <item name="android:navigationBarColor">@color/gear_primary_dark</item>
         <item name="android:windowBackground">@color/gear_background</item>
     </style>
+
+    <style name="Theme.GearHub" parent="Base.Theme.GearHub" />
 
     <style name="Widget.GearHub.PrimaryButton" parent="Widget.MaterialComponents.Button">
         <item name="cornerRadius">14dp</item>

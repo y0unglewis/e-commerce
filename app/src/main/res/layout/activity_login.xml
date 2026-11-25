@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
-            android:text="GearHub"
+            android:text="@string/app_name"
             android:textColor="@color/gear_primary"
             android:textSize="32sp" android:textStyle="bold" />
         <TextView
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="0dp"
-            android:text="Chào mừng trở lại!"
+            android:text="@string/login_welcome"
             android:textColor="@color/gear_text"
             android:textSize="24sp" android:textStyle="bold" />
         <TextView
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
-            android:text="Đăng nhập để tiếp tục khám phá GearHub."
+            android:text="@string/login_intro"
             android:textColor="@color/gear_muted"
             android:textSize="14sp" />
         <com.google.android.material.textfield.TextInputLayout
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
-            android:hint="Tên đăng nhập"
+            android:hint="@string/auth_username"
             app:boxBackgroundColor="@color/gear_surface"
             app:boxStrokeColor="@color/gear_primary">
             <com.google.android.material.textfield.TextInputEditText
@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="Mật khẩu"
+            android:hint="@string/auth_password"
             app:boxBackgroundColor="@color/gear_surface"
             app:boxStrokeColor="@color/gear_primary" app:endIconMode="password_toggle">
             <com.google.android.material.textfield.TextInputEditText
@@ -77,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Đăng nhập"
+            android:text="@string/auth_login"
             android:textAllCaps="false" />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnGoRegister"
@@ -85,14 +85,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="Tạo tài khoản"
+            android:text="@string/auth_create_account"
             android:textAllCaps="false" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="0dp"
-            android:text="Tài khoản chỉ lưu trên thiết bị này • Không đồng bộ qua mạng"
+            android:text="@string/auth_local_notice"
             android:textColor="@color/gear_muted"
             android:textSize="12sp" android:gravity="center" />
     </LinearLayout>

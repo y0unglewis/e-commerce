@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bộ lọc sản phẩm"
+            android:text="@string/filter_title"
             android:textColor="@color/gear_text"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Danh mục"
+            android:text="@string/filter_category"
             android:textColor="@color/gear_text"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Khoảng giá (VNĐ)"
+            android:text="@string/filter_price_range"
             android:textColor="@color/gear_text"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -64,7 +64,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Từ">
+                android:hint="@string/filter_min">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputMinPrice"
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:hint="Đến">
+                android:hint="@string/filter_max">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputMaxPrice"
@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Sắp xếp theo"
+            android:text="@string/filter_sort"
             android:textColor="@color/gear_text"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -124,7 +124,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Đặt lại"
+                android:text="@string/filter_reset"
                 android:textAllCaps="false" />
 
             <com.google.android.material.button.MaterialButton
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1.5"
-                android:text="Áp dụng"
+                android:text="@string/filter_apply"
                 android:textAllCaps="false" />
 
         </LinearLayout>
