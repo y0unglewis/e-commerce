@@ -50,7 +50,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:lineSpacingExtra="2dp"
-            android:text="Cảm ơn bạn đã tin tưởng GearHub.\nĐơn hàng demo của bạn đã được ghi nhận và đang xử lý."
+            android:text="Cảm ơn bạn đã tin tưởng GearHub.\nĐơn hàng mô phỏng của bạn đã được xác nhận.\nKhông phát sinh giao dịch thực tế."
             android:textColor="@color/gear_muted"
             android:textSize="14sp" />
 

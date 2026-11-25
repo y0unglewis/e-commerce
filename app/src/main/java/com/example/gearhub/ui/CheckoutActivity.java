@@ -39,7 +39,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private ImageView btnBack;
     private TextInputLayout layoutName, layoutPhone, layoutAddress;
-    private TextInputEditText inputName, inputPhone, inputAddress, inputNote;
+    private TextInputEditText inputName, inputPhone, inputAddress;
     private RadioGroup radioGroupPayment;
     private LinearLayout layoutProductList;
     private TextView txtSubtotal, txtShippingFee, txtTotal;
@@ -49,6 +49,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private final List<CartItem> checkoutItems = new ArrayList<>();
     private boolean isBuyNowFlow = false;
     private long totalAmount = 0;
+    private boolean placingOrder = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
         initViews();
         resolveCheckoutItems();
+        if (isFinishing()) return;
         displayOrderSummary();
         setupListeners();
     }
@@ -71,7 +73,6 @@ public class CheckoutActivity extends AppCompatActivity {
         inputName = findViewById(R.id.inputCheckoutName);
         inputPhone = findViewById(R.id.inputCheckoutPhone);
         inputAddress = findViewById(R.id.inputCheckoutAddress);
-        inputNote = findViewById(R.id.inputCheckoutNote);
 
         radioGroupPayment = findViewById(R.id.radioGroupPayment);
 
@@ -150,6 +151,12 @@ public class CheckoutActivity extends AppCompatActivity {
      * Xử lý xác nhận đặt hàng demo.
      */
     private void handlePlaceOrder() {
+        if (placingOrder || isFinishing()) return;
+        if (checkoutItems.isEmpty()) {
+            Toast.makeText(this, "Không có sản phẩm nào để thanh toán!", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
         String name = getTextValue(inputName).trim();
         String phone = getTextValue(inputPhone).trim();
         String address = getTextValue(inputAddress).trim();
@@ -189,10 +196,14 @@ public class CheckoutActivity extends AppCompatActivity {
         String paymentMethod = "Thanh toán khi nhận hàng (COD)";
         int selectedPaymentId = radioGroupPayment.getCheckedRadioButtonId();
         if (selectedPaymentId == R.id.radioBankTransfer) {
-            paymentMethod = "Chuyển khoản ngân hàng (Demo)";
+            paymentMethod = "Chuyển khoản ngân hàng";
         } else if (selectedPaymentId == R.id.radioEWallet) {
-            paymentMethod = "Ví điện tử MoMo / ZaloPay (Demo)";
+            paymentMethod = "Ví điện tử MoMo / ZaloPay";
         }
+
+        // Chặn nhấn nút nhiều lần sau khi form hợp lệ.
+        placingOrder = true;
+        btnPlaceOrder.setEnabled(false);
 
         // Nếu là luồng thanh toán từ giỏ hàng thì xóa giỏ hàng
         if (!isBuyNowFlow) {
@@ -207,13 +218,13 @@ public class CheckoutActivity extends AppCompatActivity {
 
         // Chuyển sang màn hình OrderSuccessActivity
         Intent successIntent = new Intent(this, OrderSuccessActivity.class);
-        successIntent.putExtra(OrderSuccessActivity.EXTRA_ORDER_CODE, orderCode);
-        successIntent.putExtra(OrderSuccessActivity.EXTRA_RECIPIENT_NAME, name);
-        successIntent.putExtra(OrderSuccessActivity.EXTRA_PHONE, phone);
-        successIntent.putExtra(OrderSuccessActivity.EXTRA_ADDRESS, address);
-        successIntent.putExtra(OrderSuccessActivity.EXTRA_PAYMENT_METHOD, paymentMethod);
-        successIntent.putExtra(OrderSuccessActivity.EXTRA_TOTAL_AMOUNT, PriceFormatter.format(totalAmount));
-        successIntent.putExtra(OrderSuccessActivity.EXTRA_ORDER_TIME, orderTime);
+        successIntent.putExtra(AppConstants.EXTRA_ORDER_CODE, orderCode);
+        successIntent.putExtra(AppConstants.EXTRA_RECIPIENT_NAME, name);
+        successIntent.putExtra(AppConstants.EXTRA_PHONE, phone);
+        successIntent.putExtra(AppConstants.EXTRA_ADDRESS, address);
+        successIntent.putExtra(AppConstants.EXTRA_PAYMENT_METHOD, paymentMethod);
+        successIntent.putExtra(AppConstants.EXTRA_TOTAL_AMOUNT, PriceFormatter.format(totalAmount));
+        successIntent.putExtra(AppConstants.EXTRA_ORDER_TIME, orderTime);
 
         startActivity(successIntent);
         finish();

@@ -38,7 +38,8 @@
         <TextView
             android:id="@+id/txtRelatedName"
             android:layout_width="match_parent"
-            android:layout_height="38dp"
+            android:layout_height="wrap_content"
+            android:minLines="2"
             android:layout_marginTop="2dp"
             android:ellipsize="end"
             android:maxLines="2"

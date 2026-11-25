@@ -134,26 +134,6 @@
                             android:singleLine="true"
                             android:textColor="@color/gear_text" />
                     </com.google.android.material.textfield.TextInputLayout>
-
-                    <!-- Ghi chú đơn hàng -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layoutCheckoutNote"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:hint="Ghi chú đơn hàng (tùy chọn)"
-                        app:boxBackgroundColor="@color/gear_surface"
-                        app:boxStrokeColor="@color/gear_primary">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/inputCheckoutNote"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:singleLine="true"
-                            android:textColor="@color/gear_text" />
-                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -177,7 +157,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Phương thức thanh toán (Demo)"
+                        android:text="Phương thức thanh toán"
                         android:textColor="@color/gear_text"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -206,7 +186,7 @@
                             android:layout_marginTop="6dp"
                             android:paddingStart="8dp"
                             android:paddingEnd="8dp"
-                            android:text="Chuyển khoản ngân hàng (Demo)"
+                            android:text="Chuyển khoản ngân hàng"
                             android:textColor="@color/gear_text"
                             android:textSize="14sp" />
 
@@ -217,10 +197,18 @@
                             android:layout_marginTop="6dp"
                             android:paddingStart="8dp"
                             android:paddingEnd="8dp"
-                            android:text="Ví điện tử MoMo / ZaloPay (Demo)"
+                            android:text="Ví điện tử MoMo / ZaloPay"
                             android:textColor="@color/gear_text"
                             android:textSize="14sp" />
                     </RadioGroup>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Thanh toán mô phỏng, không phát sinh giao dịch thực tế."
+                        android:textColor="@color/gear_muted"
+                        android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -355,7 +343,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="24dp"
-                android:text="Xác nhận đặt hàng (demo)" />
+                android:textAllCaps="false"
+                android:text="Xác nhận đặt hàng" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -10,7 +10,8 @@
         <!-- Mỗi màn hình có Activity riêng; thành viên phụ trách sửa trong file của mình. -->
 
         <activity android:name=".ui.ProfileActivity" android:exported="false" />
-        <activity android:name=".ui.CheckoutActivity" android:exported="false" />
+        <activity android:name=".ui.CheckoutActivity" android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.CartActivity" android:exported="false" />
         <activity android:name=".ui.ProductDetailActivity" android:exported="false" />
         <activity android:name=".ui.OrderSuccessActivity" android:exported="false" />
