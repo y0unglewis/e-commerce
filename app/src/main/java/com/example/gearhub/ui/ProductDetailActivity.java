@@ -258,6 +258,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         setText(R.id.txtReviewScoreBig, String.format(Locale.getDefault(), "%.1f", average));
         setText(R.id.txtDetailRatingBadge, String.format(Locale.getDefault(), "★ %.1f / 5.0", average));
         reviewCountText.setText(reviews.size() + " đánh giá");
+        setText(R.id.txtDetailReviewCount, "(" + reviewCountText.getText() + ")");
 
         for (Review review : reviews) {
             LinearLayout header = new LinearLayout(this);

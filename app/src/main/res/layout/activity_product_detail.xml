@@ -156,10 +156,10 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/txtDetailReviewCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="(Đánh giá minh họa)"
                             android:textColor="@color/gear_muted"
                             android:textSize="12sp" />
                     </LinearLayout>
