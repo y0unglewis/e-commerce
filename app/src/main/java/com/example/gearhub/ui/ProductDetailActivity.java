@@ -22,12 +22,19 @@ import com.example.gearhub.R;
 import com.example.gearhub.adapter.RelatedProductAdapter;
 import com.example.gearhub.database.GearHubDatabaseHelper;
 import com.example.gearhub.model.Product;
+import com.example.gearhub.model.Review;
 import com.example.gearhub.util.CartManager;
 import com.example.gearhub.util.HomeProductImages;
 import com.example.gearhub.util.PriceFormatter;
+import com.example.gearhub.util.SessionManager;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,9 +44,15 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private Product product;
     private TextView quantityText, subtotalText, emptyRelatedText;
+    private TextView emptyReviewsText, reviewCountText;
+    private TextInputLayout layoutReviewComment;
+    private TextInputEditText inputReviewComment;
+    private MaterialButton btnSubmitReview;
+    private TextView[] starButtons;
     private View[] tabPages;
     private RelatedProductAdapter relatedAdapter;
     private int quantity = 1;
+    private int selectedRating = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +68,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         bindProduct();
         setupTabs();
         setupActions();
+        setupReviewForm();
+        loadReviews();
         loadRelatedProducts();
     }
 
@@ -70,6 +85,15 @@ public class ProductDetailActivity extends AppCompatActivity {
         quantityText = findViewById(R.id.txtQuantity);
         subtotalText = findViewById(R.id.txtSubtotalPrice);
         emptyRelatedText = findViewById(R.id.txtEmptyRelated);
+        emptyReviewsText = findViewById(R.id.txtEmptyReviews);
+        reviewCountText = findViewById(R.id.txtReviewCount);
+        layoutReviewComment = findViewById(R.id.layoutReviewComment);
+        inputReviewComment = findViewById(R.id.inputReviewComment);
+        btnSubmitReview = findViewById(R.id.btnSubmitReview);
+        starButtons = new TextView[]{
+                findViewById(R.id.star1), findViewById(R.id.star2), findViewById(R.id.star3),
+                findViewById(R.id.star4), findViewById(R.id.star5)
+        };
         tabPages = new View[]{findViewById(R.id.layoutTabSpecs),
                 findViewById(R.id.layoutTabDescription), findViewById(R.id.layoutTabReviews)};
 
@@ -104,7 +128,6 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         populateSpecs();
         populateDescription();
-        populateReviews();
         updateQuantity(0);
     }
 
@@ -144,23 +167,108 @@ public class ProductDetailActivity extends AppCompatActivity {
                 + "\n• Tư vấn kỹ thuật và bảo hành nhanh chóng tại hệ thống GearHub");
     }
 
-    private void populateReviews() {
-        String[][] reviews = {
-                {"Minh Quân", "★★★★★  •  2 ngày trước", "Sản phẩm " + product.getName()
-                        + " đóng gói rất kỹ, hoàn thiện chắc chắn và dùng cực kỳ ổn định."},
-                {"Thu Hà", "★★★★★  •  1 tuần trước", "Đúng hàng chính hãng " + product.getBrand()
-                        + ", giao hàng nhanh, chất lượng vượt mong đợi trong tầm giá."},
-                {"Hoàng Nam", "★★★★☆  •  2 tuần trước",
-                        "Trải nghiệm thực tế tốt, thiết kế gọn đẹp, sản phẩm đáp ứng nhu cầu sử dụng hằng ngày."}
-        };
+    private void setupReviewForm() {
+        for (int i = 0; i < starButtons.length; i++) {
+            final int score = i + 1;
+            starButtons[i].setOnClickListener(v -> {
+                selectedRating = score;
+                updateStarPicker();
+            });
+        }
+        updateStarPicker();
+        btnSubmitReview.setOnClickListener(v -> submitReview());
+    }
+
+    private void updateStarPicker() {
+        for (int i = 0; i < starButtons.length; i++) {
+            int colorRes = i < selectedRating ? R.color.gear_accent : R.color.gear_border;
+            starButtons[i].setTextColor(ContextCompat.getColor(this, colorRes));
+        }
+    }
+
+    private void submitReview() {
+        String comment = inputReviewComment.getText() == null ? "" : inputReviewComment.getText().toString().trim();
+        layoutReviewComment.setError(null);
+        if (comment.isEmpty()) {
+            layoutReviewComment.setError("Vui lòng nhập nội dung đánh giá");
+            inputReviewComment.requestFocus();
+            return;
+        }
+        String savedUser = SessionManager.getUsername(this);
+        String username = savedUser.trim().isEmpty() ? "Thành viên GearHub" : savedUser.trim();
+        String createdAt = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(new Date());
+        int ratingToSave = selectedRating;
+
+        btnSubmitReview.setEnabled(false);
+        new Thread(() -> {
+            try {
+                long rowId = GearHubDatabaseHelper.getInstance(this)
+                        .addReview(product.getId(), username, ratingToSave, comment, createdAt);
+                runOnUiThread(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    btnSubmitReview.setEnabled(true);
+                    if (rowId == -1) {
+                        Toast.makeText(this, "Không thể lưu đánh giá", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    inputReviewComment.setText("");
+                    selectedRating = 5;
+                    updateStarPicker();
+                    Toast.makeText(this, "Đã gửi đánh giá", Toast.LENGTH_SHORT).show();
+                    loadReviews();
+                });
+            } catch (Exception e) {
+                runOnUiThread(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    btnSubmitReview.setEnabled(true);
+                    Toast.makeText(this, "Lỗi lưu đánh giá", Toast.LENGTH_SHORT).show();
+                });
+            }
+        }).start();
+    }
+
+    private void loadReviews() {
+        new Thread(() -> {
+            try {
+                List<Review> reviews = GearHubDatabaseHelper.getInstance(this).getReviewsByProduct(product.getId());
+                runOnUiThread(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    renderReviews(reviews);
+                });
+            } catch (Exception e) {
+                runOnUiThread(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    emptyReviewsText.setVisibility(View.VISIBLE);
+                });
+            }
+        }).start();
+    }
+
+    private void renderReviews(List<Review> reviews) {
         LinearLayout container = findViewById(R.id.containerReviews);
-        for (String[] r : reviews) {
+        container.removeAllViews();
+        emptyReviewsText.setVisibility(reviews.isEmpty() ? View.VISIBLE : View.GONE);
+
+        double average = product.getRating();
+        if (!reviews.isEmpty()) {
+            int sum = 0;
+            for (Review review : reviews) sum += review.getRating();
+            average = (double) sum / reviews.size();
+        }
+        setText(R.id.txtReviewScoreBig, String.format(Locale.getDefault(), "%.1f", average));
+        setText(R.id.txtDetailRatingBadge, String.format(Locale.getDefault(), "★ %.1f / 5.0", average));
+        reviewCountText.setText(reviews.size() + " đánh giá");
+        setText(R.id.txtDetailReviewCount, "(" + reviewCountText.getText() + ")");
+
+        for (Review review : reviews) {
             LinearLayout header = new LinearLayout(this);
             header.setGravity(Gravity.CENTER_VERTICAL);
-            header.addView(createText(r[0], R.color.gear_text, 14, true), new LinearLayout.LayoutParams(0, WRAP_CONTENT, 1f));
-            header.addView(createText(r[1], R.color.gear_accent, 12, false));
+            header.addView(createText(review.getUsername(), R.color.gear_text, 14, true),
+                    new LinearLayout.LayoutParams(0, WRAP_CONTENT, 1f));
+            header.addView(createText(starsText(review.getRating()) + "  •  " + review.getCreatedAt(),
+                    R.color.gear_accent, 12, false));
 
-            TextView comment = createText(r[2], R.color.gear_muted, 14, false);
+            TextView comment = createText(review.getComment(), R.color.gear_muted, 14, false);
             comment.setPadding(0, dp(4), 0, 0);
 
             LinearLayout box = new LinearLayout(this);
@@ -170,6 +278,12 @@ public class ProductDetailActivity extends AppCompatActivity {
             box.addView(comment);
             container.addView(box);
         }
+    }
+
+    private String starsText(int rating) {
+        StringBuilder sb = new StringBuilder(5);
+        for (int i = 0; i < 5; i++) sb.append(i < rating ? '★' : '☆');
+        return sb.toString();
     }
 
     private void setupTabs() {
