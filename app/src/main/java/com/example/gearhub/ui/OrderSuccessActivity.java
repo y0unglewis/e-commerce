@@ -26,6 +26,7 @@ public class OrderSuccessActivity extends AppCompatActivity {
     public static final String EXTRA_RECIPIENT_NAME = AppConstants.EXTRA_RECIPIENT_NAME;
     public static final String EXTRA_PHONE = AppConstants.EXTRA_PHONE;
     public static final String EXTRA_ADDRESS = AppConstants.EXTRA_ADDRESS;
+    public static final String EXTRA_NOTE = "extra_note";
     public static final String EXTRA_PAYMENT_METHOD = AppConstants.EXTRA_PAYMENT_METHOD;
     public static final String EXTRA_TOTAL_AMOUNT = AppConstants.EXTRA_TOTAL_AMOUNT;
     public static final String EXTRA_ORDER_TIME = AppConstants.EXTRA_ORDER_TIME;
@@ -35,6 +36,7 @@ public class OrderSuccessActivity extends AppCompatActivity {
     private TextView txtPhone;
     private TextView txtOrderTime;
     private TextView txtAddress;
+    private TextView txtNote;
     private TextView txtPaymentMethod;
     private TextView txtTotalAmount;
     private View layoutCopyOrderCode;
@@ -60,6 +62,7 @@ public class OrderSuccessActivity extends AppCompatActivity {
         txtPhone = findViewById(R.id.txtSuccessPhone);
         txtOrderTime = findViewById(R.id.txtSuccessOrderTime);
         txtAddress = findViewById(R.id.txtSuccessAddress);
+        txtNote = findViewById(R.id.txtSuccessNote);
         txtPaymentMethod = findViewById(R.id.txtSuccessPaymentMethod);
         txtTotalAmount = findViewById(R.id.txtSuccessTotalAmount);
         layoutCopyOrderCode = findViewById(R.id.layoutCopyOrderCode);
@@ -76,6 +79,7 @@ public class OrderSuccessActivity extends AppCompatActivity {
         String phone = intent.getStringExtra(EXTRA_PHONE);
         String orderTime = intent.getStringExtra(EXTRA_ORDER_TIME);
         String address = intent.getStringExtra(EXTRA_ADDRESS);
+        String note = intent.getStringExtra(EXTRA_NOTE);
         String payment = intent.getStringExtra(EXTRA_PAYMENT_METHOD);
         String total = intent.getStringExtra(EXTRA_TOTAL_AMOUNT);
 
@@ -86,6 +90,9 @@ public class OrderSuccessActivity extends AppCompatActivity {
         if (phone != null) txtPhone.setText(phone);
         if (orderTime != null) txtOrderTime.setText(orderTime);
         if (address != null) txtAddress.setText(address);
+        if (txtNote != null) {
+            txtNote.setText(note == null || note.trim().isEmpty() ? "Không có" : note.trim());
+        }
         if (payment != null) txtPaymentMethod.setText(payment);
         if (total != null) txtTotalAmount.setText(total);
     }

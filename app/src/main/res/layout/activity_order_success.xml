@@ -243,6 +243,33 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
+                <!-- Ghi chú giao hàng -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ghi chú:"
+                        android:textColor="@color/gear_muted"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txtSuccessNote"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="Không có"
+                        android:textColor="@color/gear_text"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
                 <!-- Phương thức thanh toán -->
                 <LinearLayout
                     android:layout_width="match_parent"

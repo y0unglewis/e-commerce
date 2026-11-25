@@ -54,9 +54,11 @@ public class CheckoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
+        CartManager.getInstance(this);
 
         initViews();
         resolveCheckoutItems();
+        if (isFinishing()) return;
         displayOrderSummary();
         setupListeners();
     }
@@ -153,6 +155,7 @@ public class CheckoutActivity extends AppCompatActivity {
         String name = getTextValue(inputName).trim();
         String phone = getTextValue(inputPhone).trim();
         String address = getTextValue(inputAddress).trim();
+        String note = getTextValue(inputNote).trim();
 
         // Xóa thông báo lỗi cũ
         layoutName.setError(null);
@@ -196,7 +199,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
         // Nếu là luồng thanh toán từ giỏ hàng thì xóa giỏ hàng
         if (!isBuyNowFlow) {
-            CartManager.getInstance().clearCart();
+            CartManager.getInstance(this).clearCart();
         }
 
         // Tạo mã đơn hàng demo ngẫu nhiên và thời gian đặt hàng
@@ -211,6 +214,7 @@ public class CheckoutActivity extends AppCompatActivity {
         successIntent.putExtra(OrderSuccessActivity.EXTRA_RECIPIENT_NAME, name);
         successIntent.putExtra(OrderSuccessActivity.EXTRA_PHONE, phone);
         successIntent.putExtra(OrderSuccessActivity.EXTRA_ADDRESS, address);
+        successIntent.putExtra(OrderSuccessActivity.EXTRA_NOTE, note);
         successIntent.putExtra(OrderSuccessActivity.EXTRA_PAYMENT_METHOD, paymentMethod);
         successIntent.putExtra(OrderSuccessActivity.EXTRA_TOTAL_AMOUNT, PriceFormatter.format(totalAmount));
         successIntent.putExtra(OrderSuccessActivity.EXTRA_ORDER_TIME, orderTime);
