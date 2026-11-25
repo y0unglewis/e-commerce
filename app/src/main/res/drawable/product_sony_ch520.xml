@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="128dp" android:height="96dp"
+    android:viewportWidth="128" android:viewportHeight="96">
+    <path android:pathData="M34,57 V40 C34,11 94,11 94,40 V57" android:fillColor="@android:color/transparent" android:strokeColor="@color/gear_muted" android:strokeWidth="5" android:strokeLineCap="round" android:strokeLineJoin="round" />
+    <path android:pathData="M34,48 H38 Q47,48 47,57 V68 Q47,77 38,77 H34 Q25,77 25,68 V57 Q25,48 34,48 Z" android:fillColor="@color/gear_primary" />
+    <path android:pathData="M90,48 H94 Q103,48 103,57 V68 Q103,77 94,77 H90 Q81,77 81,68 V57 Q81,48 90,48 Z" android:fillColor="@color/gear_primary" />
+    <path android:pathData="M35,52 H37 Q43,52 43,58 V67 Q43,73 37,73 H35 Q29,73 29,67 V58 Q29,52 35,52 Z" android:fillColor="@color/gear_primary_light" />
+    <path android:pathData="M91,52 H93 Q99,52 99,58 V67 Q99,73 93,73 H91 Q85,73 85,67 V58 Q85,52 91,52 Z" android:fillColor="@color/gear_primary_light" />
+</vector>
