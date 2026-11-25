@@ -5,31 +5,28 @@
     android:layout_height="match_parent"
     android:background="@color/gear_background"
     android:fillViewport="true">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:orientation="vertical"
+        android:gravity="center_vertical"
         android:padding="24dp">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
             android:text="GearHub"
             android:textColor="@color/gear_primary"
-            android:textSize="32sp"
-            android:textStyle="bold" />
-
+            android:textSize="32sp" android:textStyle="bold" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="0dp"
             android:text="Chào mừng trở lại!"
             android:textColor="@color/gear_text"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
+            android:textSize="24sp" android:textStyle="bold" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,25 +35,24 @@
             android:text="Đăng nhập để tiếp tục khám phá GearHub."
             android:textColor="@color/gear_muted"
             android:textSize="14sp" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutLoginUsername"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
             android:hint="Tên đăng nhập"
             app:boxBackgroundColor="@color/gear_surface"
             app:boxStrokeColor="@color/gear_primary">
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputLoginUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:singleLine="true" />
-
+                android:singleLine="true"
+                android:textColor="@color/gear_text"
+                android:saveEnabled="true" />
         </com.google.android.material.textfield.TextInputLayout>
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutLoginPassword"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -65,43 +61,39 @@
             android:layout_marginTop="12dp"
             android:hint="Mật khẩu"
             app:boxBackgroundColor="@color/gear_surface"
-            app:boxStrokeColor="@color/gear_primary"
-            app:endIconMode="password_toggle">
-
+            app:boxStrokeColor="@color/gear_primary" app:endIconMode="password_toggle">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputLoginPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:singleLine="true" />
-
+                android:singleLine="true"
+                android:textColor="@color/gear_text"
+                android:saveEnabled="false" />
         </com.google.android.material.textfield.TextInputLayout>
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
             style="@style/Widget.GearHub.PrimaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Đăng nhập" />
-
+            android:text="Đăng nhập"
+            android:textAllCaps="false" />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnGoRegister"
             style="@style/Widget.GearHub.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="Tạo tài khoản" />
-
+            android:text="Tạo tài khoản"
+            android:textAllCaps="false" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:gravity="center"
-            android:text="Phiên bản demo • Chưa xác thực tài khoản"
+            android:layout_marginBottom="0dp"
+            android:text="Tài khoản chỉ lưu trên thiết bị này • Không đồng bộ qua mạng"
             android:textColor="@color/gear_muted"
-            android:textSize="12sp" />
-
+            android:textSize="12sp" android:gravity="center" />
     </LinearLayout>
-
 </ScrollView>
