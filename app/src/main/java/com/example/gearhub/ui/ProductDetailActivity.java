@@ -22,6 +22,7 @@ import com.example.gearhub.R;
 import com.example.gearhub.adapter.RelatedProductAdapter;
 import com.example.gearhub.database.GearHubDatabaseHelper;
 import com.example.gearhub.model.Product;
+import com.example.gearhub.util.CartManager;
 import com.example.gearhub.util.HomeProductImages;
 import com.example.gearhub.util.PriceFormatter;
 import com.google.android.material.snackbar.Snackbar;
@@ -191,12 +192,19 @@ public class ProductDetailActivity extends AppCompatActivity {
         findViewById(R.id.btnDetailCart).setOnClickListener(v -> startActivity(new Intent(this, CartActivity.class)));
         findViewById(R.id.btnMinus).setOnClickListener(v -> updateQuantity(-1));
         findViewById(R.id.btnPlus).setOnClickListener(v -> updateQuantity(1));
-        findViewById(R.id.btnAddToCart).setOnClickListener(v -> Snackbar.make(v,
-                        "Đã chọn " + quantity + " × " + product.getName() + " (chờ tích hợp giỏ hàng)",
-                        Snackbar.LENGTH_SHORT)
-                .setAction("Xem giỏ", view -> startActivity(new Intent(this, CartActivity.class)))
-                .show());
-        findViewById(R.id.btnBuyNow).setOnClickListener(v -> startActivity(productIntent(CheckoutActivity.class, product)));
+        findViewById(R.id.btnAddToCart).setOnClickListener(v -> {
+            CartManager.getInstance().addToCart(product, quantity);
+            Snackbar.make(v,
+                            "Đã thêm " + quantity + " × " + product.getName() + " vào giỏ hàng",
+                            Snackbar.LENGTH_SHORT)
+                    .setAction("Xem giỏ", view -> startActivity(new Intent(this, CartActivity.class)))
+                    .show();
+        });
+        findViewById(R.id.btnBuyNow).setOnClickListener(v -> {
+            Intent intent = productIntent(CheckoutActivity.class, product);
+            intent.putExtra("extra_quantity", quantity);
+            startActivity(intent);
+        });
     }
 
     private void updateQuantity(int delta) {
