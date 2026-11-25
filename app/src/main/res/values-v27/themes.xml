@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.GearHub" parent="Base.Theme.GearHub">
+        <item name="android:navigationBarColor">@color/gear_surface</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+</resources>

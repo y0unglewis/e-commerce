@@ -8,15 +8,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import com.example.gearhub.model.Product;
+import com.example.gearhub.model.Review;
 import com.example.gearhub.util.PasswordHasher;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GearHubDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "gearhub.db";
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
     private static final String TABLE_PRODUCTS = "products";
     private static final String TABLE_USERS = "users";
+    private static final String TABLE_REVIEWS = "reviews";
     private static GearHubDatabaseHelper instance;
 
     public static synchronized GearHubDatabaseHelper getInstance(Context context) {
@@ -44,20 +46,19 @@ public class GearHubDatabaseHelper extends SQLiteOpenHelper {
             db.insertOrThrow(TABLE_PRODUCTS, null, values);
         }
         createUsersTable(db);
+        createReviewsTable(db);
+        seedSampleReviews(db);
     }
 
-    // Migration v1 -> v2 chỉ thêm bảng users, giữ toàn bộ sản phẩm cũ.
     @Override
     public void onUpgrade(SQLiteDatabase db,
                           int oldVersion,
                           int newVersion) {
 
-        // Bổ sung bảng tài khoản từ version 2.
         if (oldVersion < 2) {
             createUsersTable(db);
         }
 
-        // Bổ sung 12 sản phẩm từ version 3.
         if (oldVersion < 3) {
             for (Product product : ExpandedProducts.create()) {
                 db.insertWithOnConflict(
@@ -68,6 +69,11 @@ public class GearHubDatabaseHelper extends SQLiteOpenHelper {
                 );
             }
         }
+
+        if (oldVersion < 4) {
+            createReviewsTable(db);
+            seedSampleReviews(db);
+        }
     }
 
     private void createUsersTable(SQLiteDatabase db) {
@@ -75,6 +81,80 @@ public class GearHubDatabaseHelper extends SQLiteOpenHelper {
                 + "username TEXT NOT NULL PRIMARY KEY, "
                 + "password_hash BLOB NOT NULL, salt BLOB NOT NULL, "
                 + "algorithm TEXT NOT NULL, iterations INTEGER NOT NULL)");
+    }
+
+    private void createReviewsTable(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_REVIEWS + " ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "product_id INTEGER NOT NULL, "
+                + "username TEXT NOT NULL, "
+                + "rating INTEGER NOT NULL, "
+                + "comment TEXT NOT NULL, "
+                + "created_at TEXT NOT NULL)");
+    }
+
+    private void seedSampleReviews(SQLiteDatabase db) {
+        try (Cursor countCursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_REVIEWS, null)) {
+            if (countCursor.moveToFirst() && countCursor.getInt(0) > 0) return;
+        }
+        db.beginTransaction();
+        try (Cursor products = db.query(TABLE_PRODUCTS, new String[]{"id", "name", "brand"},
+                null, null, null, null, "id ASC")) {
+            while (products.moveToNext()) {
+                int productId = products.getInt(0);
+                String name = products.getString(1);
+                String brand = products.getString(2);
+                db.insert(TABLE_REVIEWS, null, reviewValues(productId, "Thu Hà", 5,
+                        "Đúng hàng chính hãng " + brand + ", giao hàng nhanh, chất lượng vượt mong đợi trong tầm giá.",
+                        "20/11/2026"));
+                db.insert(TABLE_REVIEWS, null, reviewValues(productId, "Minh Quân", 5,
+                        "Sản phẩm " + name + " đóng gói rất kỹ, hoàn thiện chắc chắn và dùng cực kỳ ổn định.",
+                        "23/11/2026"));
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public List<Review> getReviewsByProduct(int productId) {
+        List<Review> reviews = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        try (Cursor cursor = db.query(TABLE_REVIEWS, null, "product_id = ?",
+                new String[]{String.valueOf(productId)}, null, null, "id DESC")) {
+            int idIdx = cursor.getColumnIndexOrThrow("id");
+            int productIdx = cursor.getColumnIndexOrThrow("product_id");
+            int userIdx = cursor.getColumnIndexOrThrow("username");
+            int ratingIdx = cursor.getColumnIndexOrThrow("rating");
+            int commentIdx = cursor.getColumnIndexOrThrow("comment");
+            int timeIdx = cursor.getColumnIndexOrThrow("created_at");
+            while (cursor.moveToNext()) {
+                reviews.add(new Review(
+                        cursor.getLong(idIdx),
+                        cursor.getInt(productIdx),
+                        cursor.getString(userIdx),
+                        cursor.getInt(ratingIdx),
+                        cursor.getString(commentIdx),
+                        cursor.getString(timeIdx)));
+            }
+        }
+        return reviews;
+    }
+
+    public long addReview(int productId, String username, int rating, String comment, String createdAt) {
+        int clampedRating = Math.max(1, Math.min(5, rating));
+        return getWritableDatabase().insert(TABLE_REVIEWS, null,
+                reviewValues(productId, username, clampedRating, comment, createdAt));
+    }
+
+    private static ContentValues reviewValues(int productId, String username, int rating, String comment, String createdAt) {
+        ContentValues values = new ContentValues();
+        values.put("product_id", productId);
+        values.put("username", username);
+        values.put("rating", rating);
+        values.put("comment", comment);
+        values.put("created_at", createdAt);
+        return values;
     }
 
     public boolean userExists(String username) {

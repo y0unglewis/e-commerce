@@ -11,4 +11,57 @@
     <string name="add_to_cart">Thêm vào giỏ</string>
     <string name="buy_now">Mua ngay</string>
     <string name="currency_format">%1$s đ</string>
+
+    <!-- TV1: giao diện, xác thực và bộ lọc. -->
+    <string name="login_welcome">Chào mừng trở lại!</string>
+    <string name="login_intro">Đăng nhập để tiếp tục khám phá GearHub.</string>
+    <string name="auth_username">Tên đăng nhập</string>
+    <string name="auth_password">Mật khẩu</string>
+    <string name="auth_login">Đăng nhập</string>
+    <string name="auth_create_account">Tạo tài khoản</string>
+    <string name="auth_local_notice">Tài khoản chỉ lưu trên thiết bị này • Không đồng bộ qua mạng</string>
+    <string name="register_intro">Tạo tài khoản trên thiết bị này.</string>
+    <string name="auth_confirm_password">Xác nhận mật khẩu</string>
+    <string name="auth_register">Đăng ký</string>
+    <string name="auth_back_to_login">Quay lại đăng nhập</string>
+    <string name="filter_button">Lọc</string>
+    <string name="category_all">Tất cả</string>
+    <string name="category_headphones">Tai nghe</string>
+    <string name="category_keyboards">Bàn phím</string>
+    <string name="category_mice">Chuột</string>
+    <string name="category_chargers">Sạc</string>
+    <string name="filter_title">Bộ lọc sản phẩm</string>
+    <string name="filter_category">Danh mục</string>
+    <string name="filter_price_range">Khoảng giá (VNĐ)</string>
+    <string name="filter_min">Từ</string>
+    <string name="filter_max">Đến</string>
+    <string name="filter_sort">Sắp xếp theo</string>
+    <string name="filter_reset">Đặt lại</string>
+    <string name="filter_apply">Áp dụng</string>
+    <string name="home_promo_title">Deal công nghệ hôm nay</string>
+    <string name="home_promo_subtitle">Phụ kiện chất lượng • Giá dễ chịu</string>
+    <string name="home_promo_image">Hình tai nghe</string>
+    <string name="home_no_products">Không tìm thấy sản phẩm phù hợp.</string>
+    <string name="auth_username_min">Tên đăng nhập phải có ít nhất %1$d ký tự</string>
+    <string name="auth_password_min">Mật khẩu phải có ít nhất %1$d ký tự và không được chỉ có khoảng trắng</string>
+    <string name="auth_invalid_credentials">Tên đăng nhập hoặc mật khẩu không đúng</string>
+    <string name="auth_login_error">Không thể kiểm tra tài khoản. Hãy thử lại.</string>
+    <string name="auth_login_busy">Đang kiểm tra...</string>
+    <string name="auth_password_mismatch">Mật khẩu xác nhận không khớp</string>
+    <string name="auth_username_exists">Tên đăng nhập đã tồn tại</string>
+    <string name="auth_register_success">Đăng ký thành công. Hãy đăng nhập.</string>
+    <string name="auth_register_error">Không thể tạo tài khoản. Hãy thử lại.</string>
+    <string name="auth_register_busy">Đang tạo tài khoản...</string>
+    <string name="filter_price_invalid">Giá không hợp lệ</string>
+    <string name="filter_price_negative">Giá không được âm</string>
+    <string name="filter_price_order">Giá tối đa nhỏ hơn giá tối thiểu</string>
+    <string name="filter_button_active">Lọc ✓</string>
+    <string name="home_load_error">Không đọc được sản phẩm. Hãy thử lại.</string>
+
+    <string-array name="product_sort_options">
+        <item>Mặc định</item>
+        <item>Giá thấp đến cao</item>
+        <item>Giá cao đến thấp</item>
+        <item>Đánh giá cao nhất</item>
+    </string-array>
 </resources>
