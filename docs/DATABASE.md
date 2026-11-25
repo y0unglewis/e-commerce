@@ -4,11 +4,11 @@ SQLite là **database cục bộ trên từng thiết bị**, không phải data
 
 ## File sở hữu
 
-- `database/GearHubDatabaseHelper.java`: chủ sở hữu **TV1**; tạo SQLite, đọc sản phẩm.
-- `database/SampleProducts.java`: 12 bản ghi khởi tạo lần đầu.
+- `database/GearHubDatabaseHelper.java`: chủ sở hữu **TV1**; tạo SQLite, đọc sản phẩm và xác thực tài khoản.
+- `database/SampleProducts.java` + `ExpandedProducts.java`: 24 bản ghi khởi tạo lần đầu (6 sản phẩm mỗi danh mục).
 - `model/Product.java`: kiểu dữ liệu dùng chung cho UI.
 
-## Schema v1
+## Schema v3
 
 Bảng `products`:
 
@@ -27,11 +27,23 @@ Bảng `products`:
 
 TV2/TV3 nên gọi `GearHubDatabaseHelper.getInstance(context).getAllProducts()` **trong background thread**, sau đó cập nhật UI trên main thread. Không tạo lớp SQLite khác. Trên bản nền, Home đã có ví dụ cụ thể.
 
+## Bảng `users` (từ v2)
+
+| Cột | Kiểu |
+| --- | --- |
+| `username` | TEXT NOT NULL PRIMARY KEY |
+| `password_hash` | BLOB NOT NULL |
+| `salt` | BLOB NOT NULL |
+| `algorithm` | TEXT NOT NULL |
+| `iterations` | INTEGER NOT NULL |
+
+Mật khẩu lưu dưới dạng PBKDF2 với salt riêng; không lưu mật khẩu gốc. SessionManager chỉ lưu username. Giỏ hàng lưu trong RAM, xóa khi đăng xuất hoặc đổi tài khoản; đơn hàng và thanh toán chỉ mô phỏng, không có bảng lịch sử đơn hàng.
+
 ## Lưu ý thay đổi schema
 
 - `onCreate(SQLiteDatabase)` chỉ gọi khi database chưa được tạo; **không chạy lại mỗi lần mở app**.
 - Nếu chỉ sửa dữ liệu mẫu ở `SampleProducts`, app **đã cài trước đó không tự nhận bản ghi mới**. Cần có luồng cập nhật dữ liệu hoặc gỡ cài đặt/clear storage khi đang thử nghiệm (**sẽ xóa dữ liệu cục bộ**).
-- Không tự ý tăng `DB_VERSION`: bản v1 chưa có migration, `onUpgrade` sẽ báo lỗi có chủ ý để tránh âm thầm xóa dữ liệu. Nhóm trưởng phải thêm migration nếu thay schema.
+- Không tự ý tăng `DB_VERSION` (hiện tại là 3). Migration v1 → v2 thêm bảng `users`; v2 → v3 bổ sung ID 13–24 bằng `CONFLICT_IGNORE`, giữ nguyên tài khoản và sản phẩm cũ. Nếu từng chạy catalog thử nghiệm khác có ID trùng, kiểm tra lại tên sản phẩm 13–16 trên thiết bị QA; không xóa database của người dùng để sửa lỗi.
 - Đừng commit file `gearhub.db`; `*.db` đã nằm trong `.gitignore`.
 
 ## Xem database bằng Android Studio

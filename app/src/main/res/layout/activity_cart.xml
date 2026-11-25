@@ -107,16 +107,6 @@
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="Tiếp tục mua sắm" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAddSampleToCart"
-                style="@style/Widget.GearHub.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="Thêm sản phẩm mẫu (thử nghiệm)" />
         </LinearLayout>
     </FrameLayout>
 

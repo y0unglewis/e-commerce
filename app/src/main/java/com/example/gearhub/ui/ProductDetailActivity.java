@@ -152,7 +152,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 {"Thu Hà", "★★★★★  •  1 tuần trước", "Đúng hàng chính hãng " + product.getBrand()
                         + ", giao hàng nhanh, chất lượng vượt mong đợi trong tầm giá."},
                 {"Hoàng Nam", "★★★★☆  •  2 tuần trước",
-                        "Trải nghiệm thực tế tốt, thiết kế gọn đẹp, pin và độ nhạy đều đúng như thông số công bố."}
+                        "Trải nghiệm thực tế tốt, thiết kế gọn đẹp, sản phẩm đáp ứng nhu cầu sử dụng hằng ngày."}
         };
         LinearLayout container = findViewById(R.id.containerReviews);
         for (String[] r : reviews) {
@@ -234,7 +234,10 @@ public class ProductDetailActivity extends AppCompatActivity {
                     emptyRelatedText.setVisibility(related.isEmpty() ? View.VISIBLE : View.GONE);
                 });
             } catch (Exception e) {
-                runOnUiThread(() -> emptyRelatedText.setVisibility(View.VISIBLE));
+                runOnUiThread(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    emptyRelatedText.setVisibility(View.VISIBLE);
+                });
             }
         }).start();
     }

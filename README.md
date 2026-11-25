@@ -6,14 +6,16 @@
 
 ## 1. Trạng thái hiện tại
 
-| Màn hình / phần việc | Trạng thái |
+| Màn hình / phần việc | Chức năng đã triển khai |
 | --- | --- |
-| Home: sản phẩm 2 cột, tìm kiếm, lọc danh mục, bottom navigation | **Khung chạy được**, tiếp tục hoàn thiện UI |
-| SQLite: bảng `products`, 12 sản phẩm mẫu dùng chung trong source | **Đã có** |
-| Product Detail: ảnh, tên, giá, 3 tab, nút +/- | **Khung chạy được**, TV2 hoàn thiện |
-| Giỏ hàng, Checkout, Profile | **Màn khung**, TV3 hoàn thiện |
+| Login/Register | Xác thực SQLite, PBKDF2, lưu session |
+| Home | Grid 2 cột, Search, Advanced Filter, RecyclerView + ConcatAdapter |
+| SQLite | Schema v3, 24 sản phẩm, 6 sản phẩm mỗi danh mục |
+| Product Detail | 3 tab, sản phẩm liên quan, số lượng, thêm vào giỏ và mua ngay |
+| Profile | Username từ session, đăng xuất |
+| Cart/Checkout/Order Success | Giỏ hàng RAM, tổng tiền, kiểm tra form, đặt hàng demo |
 
-Ảnh sản phẩm hiện là **Vector Drawable minh họa**. Các thành viên có thể bổ sung ảnh rõ nét theo hướng dẫn chung mà không thay đổi schema SQLite.
+Ảnh sản phẩm dùng chung 24 WebP trong drawable-nodpi. Thanh toán và đánh giá chỉ minh họa; không có giao dịch thật hay lưu lịch sử đơn hàng. Giỏ hàng không lưu khi tiến trình bị đóng.
 
 ## 2. Công nghệ
 
@@ -28,7 +30,7 @@
 1. Cài Android Studio và SDK Platform 35. Dùng **JDK 17** cho Gradle.
 2. Clone repo và mở **thư mục gốc** chứa `settings.gradle` bằng **File → Open**.
 3. Chờ **Gradle Sync**; chọn emulator hoặc thiết bị Android API 24 trở lên.
-4. Chạy cấu hình **app**. Màn hình mở đầu là `HomeActivity`.
+4. Chạy cấu hình **app**. Màn hình mở đầu là `LoginActivity` (tự chuyển Home nếu session hợp lệ).
 5. Repo có sẵn `gradlew`, `gradlew.bat` và `gradle/wrapper/gradle-wrapper.jar`. Trên Windows có thể chạy `./gradlew.bat :app:assembleDebug` sau khi cài SDK/JDK; không cần cài Gradle toàn máy. **Không tạo `local.properties` cho máy của người khác.**
 
 > GitHub Actions có bước **build debug APK** khi push/PR. Việc build thành công chưa thay cho kiểm tra UI bằng emulator: mỗi thành viên vẫn phải Sync và chạy app trước khi gửi PR.
@@ -46,11 +48,12 @@ Hướng dẫn chi tiết: [CONTRIBUTING.md](CONTRIBUTING.md) · [Quy chuẩn UI
 
 ## 5. Luồng thử nghiệm
 
-Home → chọn sản phẩm → Detail → chọn tab Thông số/Mô tả/Đánh giá → bấm `+` / `−` → Mua ngay → Checkout (demo).
+- Đăng ký → đăng nhập → Home → Search/Filter → Detail (3 tab, số lượng, sản phẩm liên quan).
+- Detail → Thêm vào giỏ → Cart → Checkout → Order Success → Home.
+- Detail → Mua ngay → Checkout → Order Success → Home (giữ nguyên giỏ hàng).
+- Profile → Đăng xuất → Login; đăng nhập tài khoản khác không mang giỏ hàng cũ.
 
-Home → Giỏ hàng (khung) → Checkout (demo); Home → Tài khoản (khung).
-
-**Lưu ý:** việc bấm “Thêm vào giỏ” chưa lưu sản phẩm trong bản nền; đây là phần TV3 triển khai tiếp. Không trình bày khung giao diện như chức năng hoàn chỉnh khi nộp.
+Kiểm tra dữ liệu sai, số lượng 1–99, giỏ rỗng, tổng tiền, Back và bàn phím trước khi release.
 
 ## 6. Nộp bài
 

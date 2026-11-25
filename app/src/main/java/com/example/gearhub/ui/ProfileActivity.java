@@ -15,7 +15,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Locale;
 
 public class ProfileActivity extends AppCompatActivity {
-    private static final String DEFAULT_USERNAME = "gearhub_member";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +30,11 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         String username = username();
+        if (username.isEmpty()) {
+            SessionManager.clear(this);
+            openLogin();
+            return;
+        }
         setText(R.id.txtProfileFullName, displayName(username));
         setText(R.id.txtProfileUsername, "@" + username);
         setText(findViewById(R.id.itemPersonalInfo), R.id.txtMenuSubtitle,
@@ -44,11 +48,11 @@ public class ProfileActivity extends AppCompatActivity {
                     showDialog("Thông tin cá nhân", "Họ tên hiển thị: " + displayName(username)
                             + "\nUsername: @" + username + "\nHạng thành viên: Khách hàng thân thiết GearHub");
                 });
-        bindMenu(R.id.itemOrders, R.drawable.ic_profile_orders, "Đơn hàng",
-                "Kiểm tra giỏ hàng và lịch sử đặt mua", v -> startActivity(new Intent(this, CartActivity.class)));
+        bindMenu(R.id.itemOrders, R.drawable.ic_profile_orders, "Giỏ hàng",
+                "Xem sản phẩm đã chọn", v -> startActivity(new Intent(this, CartActivity.class)));
         bindMenu(R.id.itemSettings, R.drawable.ic_profile_settings, "Cài đặt",
-                "Thông báo, giao diện và phiên bản ứng dụng", v -> showDialog("Cài đặt ứng dụng",
-                        "• Phiên bản: GearHub 1.0\n• Cơ sở dữ liệu: SQLite Local (gearhub.db)\n• Thông báo đơn hàng: Đang bật"));
+                "Thông tin ứng dụng", v -> showDialog("Cài đặt ứng dụng",
+                        "• Phiên bản: GearHub 1.0\n• Ứng dụng mua sắm mô phỏng"));
     }
 
     private void bindMenu(int itemId, int iconRes, String title, String subtitle, View.OnClickListener action) {
@@ -62,8 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private String username() {
-        String saved = SessionManager.getUsername(this);
-        return saved == null || saved.trim().isEmpty() ? DEFAULT_USERNAME : saved.trim();
+        return SessionManager.getUsername(this);
     }
 
     private String displayName(String username) {
@@ -93,6 +96,10 @@ public class ProfileActivity extends AppCompatActivity {
         SessionManager.clear(this);
         CartManager.getInstance().clearCart(this);
         Toast.makeText(this, "Đã đăng xuất thành công", Toast.LENGTH_SHORT).show();
+        openLogin();
+    }
+
+    private void openLogin() {
         startActivity(new Intent(this, LoginActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         finish();

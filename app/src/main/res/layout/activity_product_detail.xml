@@ -159,7 +159,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="(128 đánh giá • Chính hãng 100%)"
+                            android:text="(Đánh giá minh họa)"
                             android:textColor="@color/gear_muted"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -352,7 +352,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="2dp"
-                                    android:text="Dựa trên các nhận xét đã xác thực"
+                                    android:text="Nhận xét mẫu (demo)"
                                     android:textColor="@color/gear_muted"
                                     android:textSize="12sp" />
                             </LinearLayout>
@@ -440,8 +440,8 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnMinus"
                 style="@style/Widget.GearHub.OutlinedButton"
-                android:layout_width="46dp"
-                android:layout_height="42dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:padding="0dp"
@@ -461,8 +461,8 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnPlus"
                 style="@style/Widget.GearHub.OutlinedButton"
-                android:layout_width="46dp"
-                android:layout_height="42dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:padding="0dp"
