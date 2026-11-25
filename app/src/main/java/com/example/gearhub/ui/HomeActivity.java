@@ -12,11 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gearhub.AppConstants;
 import com.example.gearhub.R;
+import com.example.gearhub.adapter.HomeHeaderAdapter;
 import com.example.gearhub.adapter.ProductAdapter;
 import com.example.gearhub.database.GearHubDatabaseHelper;
 import com.example.gearhub.model.Product;
@@ -44,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private ProductAdapter adapter;
     private TextInputEditText searchInput;
-    private TextView emptyText;
+    private HomeHeaderAdapter headerAdapter;
 
     private String selectedCategory = AppConstants.CATEGORY_ALL;
 
@@ -84,21 +86,28 @@ public class HomeActivity extends AppCompatActivity {
 
     private void initViews() {
         searchInput = findViewById(R.id.inputSearch);
-        emptyText = findViewById(R.id.txtEmpty);
-
-        RecyclerView productList =
-            findViewById(R.id.recyclerProducts);
-
-        productList.setLayoutManager(
-            new GridLayoutManager(this, 2)
-        );
-
-        adapter = new ProductAdapter(this::openProductDetail);
-
-        productList.setAdapter(adapter);
+        setupProductList();
 
         findViewById(R.id.btnHeaderCart)
             .setOnClickListener(v -> openCart());
+    }
+
+    private void setupProductList() {
+        RecyclerView productList = findViewById(R.id.recyclerProducts);
+        headerAdapter = new HomeHeaderAdapter();
+        adapter = new ProductAdapter(this::openProductDetail);
+
+        // Header chiếm cả hai cột; mỗi sản phẩm chiếm một cột.
+        GridLayoutManager manager = new GridLayoutManager(this, 2);
+        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return position < headerAdapter.getItemCount() ? 2 : 1;
+            }
+        });
+
+        productList.setLayoutManager(manager);
+        productList.setAdapter(new ConcatAdapter(headerAdapter, adapter));
     }
 
     private void setupSearch() {
@@ -487,11 +496,7 @@ public class HomeActivity extends AppCompatActivity {
         sortProducts(visible);
 
         adapter.setProducts(visible);
-
-        emptyText.setVisibility(
-            visible.isEmpty()
-                ? View.VISIBLE : View.GONE
-        );
+        headerAdapter.setEmpty(visible.isEmpty());
 
         updateFilterButton();
     }
