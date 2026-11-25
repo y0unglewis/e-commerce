@@ -116,7 +116,7 @@
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -162,11 +162,11 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="88dp"
-                    android:layout_height="88dp"
+                    android:layout_width="104dp"
+                    android:layout_height="104dp"
                     android:contentDescription="Hình tai nghe"
-                    android:src="@drawable/ic_headphones"
-                    app:tint="@color/gear_surface" />
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/img_promo_headphones" />
             </LinearLayout>
 
             <TextView
@@ -200,7 +200,7 @@
                 android:paddingEnd="10dp"
                 android:paddingBottom="20dp" />
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
