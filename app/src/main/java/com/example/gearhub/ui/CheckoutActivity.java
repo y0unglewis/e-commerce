@@ -39,7 +39,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private ImageView btnBack;
     private TextInputLayout layoutName, layoutPhone, layoutAddress;
-    private TextInputEditText inputName, inputPhone, inputAddress;
+    private TextInputEditText inputName, inputPhone, inputAddress, inputNote;
     private RadioGroup radioGroupPayment;
     private LinearLayout layoutProductList;
     private TextView txtSubtotal, txtShippingFee, txtTotal;
@@ -55,6 +55,7 @@ public class CheckoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
+        CartManager.getInstance(this);
 
         initViews();
         resolveCheckoutItems();
@@ -73,6 +74,7 @@ public class CheckoutActivity extends AppCompatActivity {
         inputName = findViewById(R.id.inputCheckoutName);
         inputPhone = findViewById(R.id.inputCheckoutPhone);
         inputAddress = findViewById(R.id.inputCheckoutAddress);
+        inputNote = findViewById(R.id.inputCheckoutNote);
 
         radioGroupPayment = findViewById(R.id.radioGroupPayment);
 
@@ -160,6 +162,7 @@ public class CheckoutActivity extends AppCompatActivity {
         String name = getTextValue(inputName).trim();
         String phone = getTextValue(inputPhone).trim();
         String address = getTextValue(inputAddress).trim();
+        String note = getTextValue(inputNote).trim();
 
         // Xóa thông báo lỗi cũ
         layoutName.setError(null);
@@ -207,7 +210,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
         // Nếu là luồng thanh toán từ giỏ hàng thì xóa giỏ hàng
         if (!isBuyNowFlow) {
-            CartManager.getInstance().clearCart();
+            CartManager.getInstance(this).clearCart();
         }
 
         // Tạo mã đơn hàng demo ngẫu nhiên và thời gian đặt hàng
@@ -222,6 +225,7 @@ public class CheckoutActivity extends AppCompatActivity {
         successIntent.putExtra(AppConstants.EXTRA_RECIPIENT_NAME, name);
         successIntent.putExtra(AppConstants.EXTRA_PHONE, phone);
         successIntent.putExtra(AppConstants.EXTRA_ADDRESS, address);
+        successIntent.putExtra(OrderSuccessActivity.EXTRA_NOTE, note);
         successIntent.putExtra(AppConstants.EXTRA_PAYMENT_METHOD, paymentMethod);
         successIntent.putExtra(AppConstants.EXTRA_TOTAL_AMOUNT, PriceFormatter.format(totalAmount));
         successIntent.putExtra(AppConstants.EXTRA_ORDER_TIME, orderTime);

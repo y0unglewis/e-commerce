@@ -134,6 +134,26 @@
                             android:singleLine="true"
                             android:textColor="@color/gear_text" />
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Ghi chú đơn hàng -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutCheckoutNote"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Ghi chú đơn hàng (tùy chọn)"
+                        app:boxBackgroundColor="@color/gear_surface"
+                        app:boxStrokeColor="@color/gear_primary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputCheckoutNote"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:textColor="@color/gear_text" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

@@ -22,11 +22,14 @@ import com.google.android.material.button.MaterialButton;
  */
 public class OrderSuccessActivity extends AppCompatActivity {
 
+    public static final String EXTRA_NOTE = "extra_note";
+
     private TextView txtOrderCode;
     private TextView txtRecipient;
     private TextView txtPhone;
     private TextView txtOrderTime;
     private TextView txtAddress;
+    private TextView txtNote;
     private TextView txtPaymentMethod;
     private TextView txtTotalAmount;
     private View layoutCopyOrderCode;
@@ -52,6 +55,7 @@ public class OrderSuccessActivity extends AppCompatActivity {
         txtPhone = findViewById(R.id.txtSuccessPhone);
         txtOrderTime = findViewById(R.id.txtSuccessOrderTime);
         txtAddress = findViewById(R.id.txtSuccessAddress);
+        txtNote = findViewById(R.id.txtSuccessNote);
         txtPaymentMethod = findViewById(R.id.txtSuccessPaymentMethod);
         txtTotalAmount = findViewById(R.id.txtSuccessTotalAmount);
         layoutCopyOrderCode = findViewById(R.id.layoutCopyOrderCode);
@@ -68,6 +72,7 @@ public class OrderSuccessActivity extends AppCompatActivity {
         String phone = intent.getStringExtra(AppConstants.EXTRA_PHONE);
         String orderTime = intent.getStringExtra(AppConstants.EXTRA_ORDER_TIME);
         String address = intent.getStringExtra(AppConstants.EXTRA_ADDRESS);
+        String note = intent.getStringExtra(EXTRA_NOTE);
         String payment = intent.getStringExtra(AppConstants.EXTRA_PAYMENT_METHOD);
         String total = intent.getStringExtra(AppConstants.EXTRA_TOTAL_AMOUNT);
 
@@ -78,6 +83,9 @@ public class OrderSuccessActivity extends AppCompatActivity {
         if (phone != null) txtPhone.setText(phone);
         if (orderTime != null) txtOrderTime.setText(orderTime);
         if (address != null) txtAddress.setText(address);
+        if (txtNote != null) {
+            txtNote.setText(note == null || note.trim().isEmpty() ? "Không có" : note.trim());
+        }
         if (payment != null) txtPaymentMethod.setText(payment);
         if (total != null) txtTotalAmount.setText(total);
     }

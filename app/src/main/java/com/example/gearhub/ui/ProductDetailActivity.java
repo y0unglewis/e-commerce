@@ -65,6 +65,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             return;
         }
         initViews();
+        CartManager.getInstance(this);
         bindProduct();
         setupTabs();
         setupActions();
