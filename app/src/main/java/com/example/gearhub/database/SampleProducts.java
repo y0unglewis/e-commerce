@@ -47,6 +47,8 @@ final class SampleProducts {
         products.add(new Product(12, "Sạc dự phòng 10000mAh", "Baseus", AppConstants.CATEGORY_CHARGERS,
                 590000, 790000, 4.5f, "charger", "Pin dự phòng dung lượng phù hợp sử dụng hằng ngày.",
                 "Dung lượng: 10000 mAh\nCổng: USB-C\nSạc nhanh: 20W\nBảo hành: 12 tháng"));
+        products.addAll(ExpandedProducts.create());
+
         return products;
     }
 }

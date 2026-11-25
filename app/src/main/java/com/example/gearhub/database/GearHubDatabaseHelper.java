@@ -14,7 +14,7 @@ import java.util.List;
 
 public class GearHubDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "gearhub.db";
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
     private static final String TABLE_PRODUCTS = "products";
     private static final String TABLE_USERS = "users";
     private static GearHubDatabaseHelper instance;
@@ -48,12 +48,26 @@ public class GearHubDatabaseHelper extends SQLiteOpenHelper {
 
     // Migration v1 -> v2 chỉ thêm bảng users, giữ toàn bộ sản phẩm cũ.
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion == 1 && newVersion == 2) {
+    public void onUpgrade(SQLiteDatabase db,
+                          int oldVersion,
+                          int newVersion) {
+
+        // Bổ sung bảng tài khoản từ version 2.
+        if (oldVersion < 2) {
             createUsersTable(db);
-            return;
         }
-        throw new IllegalStateException("Chưa có migration SQLite từ " + oldVersion + " lên " + newVersion);
+
+        // Bổ sung 12 sản phẩm từ version 3.
+        if (oldVersion < 3) {
+            for (Product product : ExpandedProducts.create()) {
+                db.insertWithOnConflict(
+                    TABLE_PRODUCTS,
+                    null,
+                    toValues(product),
+                    SQLiteDatabase.CONFLICT_IGNORE
+                );
+            }
+        }
     }
 
     private void createUsersTable(SQLiteDatabase db) {
