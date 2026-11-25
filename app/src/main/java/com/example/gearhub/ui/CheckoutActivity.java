@@ -93,7 +93,7 @@ public class CheckoutActivity extends AppCompatActivity {
         if (extra instanceof Product) {
             // Luồng 1: Mua ngay từ ProductDetailActivity
             Product product = (Product) extra;
-            int quantity = getIntent().getIntExtra("extra_quantity", 1);
+            int quantity = getIntent().getIntExtra(AppConstants.EXTRA_QUANTITY, 1);
             if (quantity <= 0) quantity = 1;
 
             checkoutItems.add(new CartItem(product, quantity));

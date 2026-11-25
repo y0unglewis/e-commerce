@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.gearhub.AppConstants;
 import com.example.gearhub.R;
 import com.google.android.material.button.MaterialButton;
 
@@ -21,13 +22,13 @@ import com.google.android.material.button.MaterialButton;
  */
 public class OrderSuccessActivity extends AppCompatActivity {
 
-    public static final String EXTRA_ORDER_CODE = "extra_order_code";
-    public static final String EXTRA_RECIPIENT_NAME = "extra_recipient_name";
-    public static final String EXTRA_PHONE = "extra_phone";
-    public static final String EXTRA_ADDRESS = "extra_address";
-    public static final String EXTRA_PAYMENT_METHOD = "extra_payment_method";
-    public static final String EXTRA_TOTAL_AMOUNT = "extra_total_amount";
-    public static final String EXTRA_ORDER_TIME = "extra_order_time";
+    public static final String EXTRA_ORDER_CODE = AppConstants.EXTRA_ORDER_CODE;
+    public static final String EXTRA_RECIPIENT_NAME = AppConstants.EXTRA_RECIPIENT_NAME;
+    public static final String EXTRA_PHONE = AppConstants.EXTRA_PHONE;
+    public static final String EXTRA_ADDRESS = AppConstants.EXTRA_ADDRESS;
+    public static final String EXTRA_PAYMENT_METHOD = AppConstants.EXTRA_PAYMENT_METHOD;
+    public static final String EXTRA_TOTAL_AMOUNT = AppConstants.EXTRA_TOTAL_AMOUNT;
+    public static final String EXTRA_ORDER_TIME = AppConstants.EXTRA_ORDER_TIME;
 
     private TextView txtOrderCode;
     private TextView txtRecipient;

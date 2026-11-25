@@ -202,7 +202,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
         findViewById(R.id.btnBuyNow).setOnClickListener(v -> {
             Intent intent = productIntent(CheckoutActivity.class, product);
-            intent.putExtra("extra_quantity", quantity);
+            intent.putExtra(AppConstants.EXTRA_QUANTITY, quantity);
             startActivity(intent);
         });
     }
