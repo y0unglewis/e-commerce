@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="128dp" android:height="96dp"
+    android:viewportWidth="128" android:viewportHeight="96">
+    <path android:pathData="M13,27 H115 Q121,27 121,33 V68 Q121,74 115,74 H13 Q7,74 7,68 V33 Q7,27 13,27 Z" android:fillColor="@color/gear_muted" />
+    <path android:pathData="M14.0,32 H15.600000000000001 Q17.6,32 17.6,34 V36 Q17.6,38 15.600000000000001,38 H14.0 Q12.0,38 12.0,36 V34 Q12.0,32 14.0,32 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M21.4,32 H23.0 Q25.0,32 25.0,34 V36 Q25.0,38 23.0,38 H21.4 Q19.4,38 19.4,36 V34 Q19.4,32 21.4,32 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M28.9,32 H30.5 Q32.5,32 32.5,34 V36 Q32.5,38 30.5,38 H28.9 Q26.9,38 26.9,36 V34 Q26.9,32 28.9,32 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M36.3,32 H37.9 Q39.9,32 39.9,34 V36 Q39.9,38 37.9,38 H36.3 Q34.3,38 34.3,36 V34 Q34.3,32 36.3,32 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M43.7,32 H45.300000000000004 Q47.300000000000004,32 47.300000000000004,34 V36 Q47.300000000000004,38 45.300000000000004,38 H43.7 Q41.7,38 41.7,36 V34 Q41.7,32 43.7,32 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M51.1,32 H52.7 Q54.7,32 54.7,34 V36 Q54.7,38 52.7,38 H51.1 Q49.1,38 49.1,36 V34 Q49.1,32 51.1,32 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M58.6,32 H60.2 Q62.2,32 62.2,34 V36 Q62.2,38 60.2,38 H58.6 Q56.6,38 56.6,36 V34 Q56.6,32 58.6,32 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M66.0,32 H67.6 Q69.6,32 69.6,34 V36 Q69.6,38 67.6,38 H66.0 Q64.0,38 64.0,36 V34 Q64.0,32 66.0,32 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M73.4,32 H75.0 Q77.0,32 77.0,34 V36 Q77.0,38 75.0,38 H73.4 Q71.4,38 71.4,36 V34 Q71.4,32 73.4,32 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M80.9,32 H82.5 Q84.5,32 84.5,34 V36 Q84.5,38 82.5,38 H80.9 Q78.9,38 78.9,36 V34 Q78.9,32 80.9,32 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M88.3,32 H89.89999999999999 Q91.89999999999999,32 91.89999999999999,34 V36 Q91.89999999999999,38 89.89999999999999,38 H88.3 Q86.3,38 86.3,36 V34 Q86.3,32 88.3,32 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M95.7,32 H97.3 Q99.3,32 99.3,34 V36 Q99.3,38 97.3,38 H95.7 Q93.7,38 93.7,36 V34 Q93.7,32 95.7,32 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M103.1,32 H104.69999999999999 Q106.69999999999999,32 106.69999999999999,34 V36 Q106.69999999999999,38 104.69999999999999,38 H103.1 Q101.1,38 101.1,36 V34 Q101.1,32 103.1,32 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M110.6,32 H112.19999999999999 Q114.19999999999999,32 114.19999999999999,34 V36 Q114.19999999999999,38 112.19999999999999,38 H110.6 Q108.6,38 108.6,36 V34 Q108.6,32 110.6,32 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M14.0,41 H15.600000000000001 Q17.6,41 17.6,43 V45 Q17.6,47 15.600000000000001,47 H14.0 Q12.0,47 12.0,45 V43 Q12.0,41 14.0,41 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M21.4,41 H23.0 Q25.0,41 25.0,43 V45 Q25.0,47 23.0,47 H21.4 Q19.4,47 19.4,45 V43 Q19.4,41 21.4,41 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M28.9,41 H30.5 Q32.5,41 32.5,43 V45 Q32.5,47 30.5,47 H28.9 Q26.9,47 26.9,45 V43 Q26.9,41 28.9,41 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M36.3,41 H37.9 Q39.9,41 39.9,43 V45 Q39.9,47 37.9,47 H36.3 Q34.3,47 34.3,45 V43 Q34.3,41 36.3,41 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M43.7,41 H45.300000000000004 Q47.300000000000004,41 47.300000000000004,43 V45 Q47.300000000000004,47 45.300000000000004,47 H43.7 Q41.7,47 41.7,45 V43 Q41.7,41 43.7,41 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M51.1,41 H52.7 Q54.7,41 54.7,43 V45 Q54.7,47 52.7,47 H51.1 Q49.1,47 49.1,45 V43 Q49.1,41 51.1,41 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M58.6,41 H60.2 Q62.2,41 62.2,43 V45 Q62.2,47 60.2,47 H58.6 Q56.6,47 56.6,45 V43 Q56.6,41 58.6,41 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M66.0,41 H67.6 Q69.6,41 69.6,43 V45 Q69.6,47 67.6,47 H66.0 Q64.0,47 64.0,45 V43 Q64.0,41 66.0,41 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M73.4,41 H75.0 Q77.0,41 77.0,43 V45 Q77.0,47 75.0,47 H73.4 Q71.4,47 71.4,45 V43 Q71.4,41 73.4,41 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M80.9,41 H82.5 Q84.5,41 84.5,43 V45 Q84.5,47 82.5,47 H80.9 Q78.9,47 78.9,45 V43 Q78.9,41 80.9,41 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M88.3,41 H89.89999999999999 Q91.89999999999999,41 91.89999999999999,43 V45 Q91.89999999999999,47 89.89999999999999,47 H88.3 Q86.3,47 86.3,45 V43 Q86.3,41 88.3,41 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M95.7,41 H97.3 Q99.3,41 99.3,43 V45 Q99.3,47 97.3,47 H95.7 Q93.7,47 93.7,45 V43 Q93.7,41 95.7,41 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M103.1,41 H104.69999999999999 Q106.69999999999999,41 106.69999999999999,43 V45 Q106.69999999999999,47 104.69999999999999,47 H103.1 Q101.1,47 101.1,45 V43 Q101.1,41 103.1,41 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M110.6,41 H112.19999999999999 Q114.19999999999999,41 114.19999999999999,43 V45 Q114.19999999999999,47 112.19999999999999,47 H110.6 Q108.6,47 108.6,45 V43 Q108.6,41 110.6,41 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M14.0,50 H15.600000000000001 Q17.6,50 17.6,52 V54 Q17.6,56 15.600000000000001,56 H14.0 Q12.0,56 12.0,54 V52 Q12.0,50 14.0,50 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M21.4,50 H23.0 Q25.0,50 25.0,52 V54 Q25.0,56 23.0,56 H21.4 Q19.4,56 19.4,54 V52 Q19.4,50 21.4,50 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M28.9,50 H30.5 Q32.5,50 32.5,52 V54 Q32.5,56 30.5,56 H28.9 Q26.9,56 26.9,54 V52 Q26.9,50 28.9,50 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M36.3,50 H37.9 Q39.9,50 39.9,52 V54 Q39.9,56 37.9,56 H36.3 Q34.3,56 34.3,54 V52 Q34.3,50 36.3,50 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M43.7,50 H45.300000000000004 Q47.300000000000004,50 47.300000000000004,52 V54 Q47.300000000000004,56 45.300000000000004,56 H43.7 Q41.7,56 41.7,54 V52 Q41.7,50 43.7,50 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M51.1,50 H52.7 Q54.7,50 54.7,52 V54 Q54.7,56 52.7,56 H51.1 Q49.1,56 49.1,54 V52 Q49.1,50 51.1,50 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M58.6,50 H60.2 Q62.2,50 62.2,52 V54 Q62.2,56 60.2,56 H58.6 Q56.6,56 56.6,54 V52 Q56.6,50 58.6,50 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M66.0,50 H67.6 Q69.6,50 69.6,52 V54 Q69.6,56 67.6,56 H66.0 Q64.0,56 64.0,54 V52 Q64.0,50 66.0,50 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M73.4,50 H75.0 Q77.0,50 77.0,52 V54 Q77.0,56 75.0,56 H73.4 Q71.4,56 71.4,54 V52 Q71.4,50 73.4,50 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M80.9,50 H82.5 Q84.5,50 84.5,52 V54 Q84.5,56 82.5,56 H80.9 Q78.9,56 78.9,54 V52 Q78.9,50 80.9,50 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M88.3,50 H89.89999999999999 Q91.89999999999999,50 91.89999999999999,52 V54 Q91.89999999999999,56 89.89999999999999,56 H88.3 Q86.3,56 86.3,54 V52 Q86.3,50 88.3,50 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M95.7,50 H97.3 Q99.3,50 99.3,52 V54 Q99.3,56 97.3,56 H95.7 Q93.7,56 93.7,54 V52 Q93.7,50 95.7,50 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M103.1,50 H104.69999999999999 Q106.69999999999999,50 106.69999999999999,52 V54 Q106.69999999999999,56 104.69999999999999,56 H103.1 Q101.1,56 101.1,54 V52 Q101.1,50 103.1,50 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M110.6,50 H112.19999999999999 Q114.19999999999999,50 114.19999999999999,52 V54 Q114.19999999999999,56 112.19999999999999,56 H110.6 Q108.6,56 108.6,54 V52 Q108.6,50 110.6,50 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M14.0,59 H15.600000000000001 Q17.6,59 17.6,61 V63 Q17.6,65 15.600000000000001,65 H14.0 Q12.0,65 12.0,63 V61 Q12.0,59 14.0,59 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M21.4,59 H23.0 Q25.0,59 25.0,61 V63 Q25.0,65 23.0,65 H21.4 Q19.4,65 19.4,63 V61 Q19.4,59 21.4,59 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M28.9,59 H30.5 Q32.5,59 32.5,61 V63 Q32.5,65 30.5,65 H28.9 Q26.9,65 26.9,63 V61 Q26.9,59 28.9,59 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M95.7,59 H97.3 Q99.3,59 99.3,61 V63 Q99.3,65 97.3,65 H95.7 Q93.7,65 93.7,63 V61 Q93.7,59 95.7,59 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M103.1,59 H104.69999999999999 Q106.69999999999999,59 106.69999999999999,61 V63 Q106.69999999999999,65 104.69999999999999,65 H103.1 Q101.1,65 101.1,63 V61 Q101.1,59 103.1,59 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M110.6,59 H112.19999999999999 Q114.19999999999999,59 114.19999999999999,61 V63 Q114.19999999999999,65 112.19999999999999,65 H110.6 Q108.6,65 108.6,63 V61 Q108.6,59 110.6,59 Z" android:fillColor="@color/gear_text" />
+    <path android:pathData="M36.3,59 H89.69999999999999 Q91.69999999999999,59 91.69999999999999,61 V63 Q91.69999999999999,65 89.69999999999999,65 H36.3 Q34.3,65 34.3,63 V61 Q34.3,59 36.3,59 Z" android:fillColor="@color/gear_text" />
+</vector>

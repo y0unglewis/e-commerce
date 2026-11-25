@@ -21,10 +21,10 @@
         <ImageView
             android:id="@+id/imgProduct"
             android:layout_width="match_parent"
-            android:layout_height="118dp"
+            android:layout_height="120dp"
             android:background="@drawable/bg_product_icon"
             android:contentDescription="Hình sản phẩm"
-            android:padding="29dp"
+            android:padding="16dp"
             android:scaleType="fitCenter" />
 
         <TextView
@@ -38,9 +38,11 @@
         <TextView
             android:id="@+id/txtName"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:ellipsize="end"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:minLines="2"
             android:maxLines="2"
+            android:ellipsize="end"
             android:textColor="@color/gear_text"
             android:textSize="14sp"
             android:textStyle="bold" />
